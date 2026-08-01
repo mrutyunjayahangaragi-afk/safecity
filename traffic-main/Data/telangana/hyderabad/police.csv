@@ -1,0 +1,113 @@
+id,city,station_name,latitude,longitude,area,jurisdiction,emergency_number,women_helpdesk,cyber_cell,patrol_units,average_response_time_min,officers_available,safety_rating,open_24x7,last_updated
+2a4fa77a-99e3-42dd-ab5a-341f130ac942,hyderabad,Jubilee Hills Police Station,17.290112,78.415929,Jubilee Hills,Jubilee Hills Sub-Division,100,False,False,2,4,37,7.5,True,2026-07-31T19:24:43.013183+00:00
+e8444f90-06a8-40d4-9b09-c73646172871,hyderabad,Jubilee Hills Police Station,17.309881,78.597946,Jubilee Hills,Jubilee Hills Sub-Division,100,False,True,4,12,12,7.6,True,2026-07-31T19:24:43.013201+00:00
+f44b8d23-8566-4ed6-8efb-aa219b36ae39,hyderabad,Banjara Hills Police Station,17.22498,78.559161,Banjara Hills,Banjara Hills Sub-Division,100,True,False,13,4,11,6.3,True,2026-07-31T19:24:43.013210+00:00
+a6c0810d-1de3-463e-95cd-c9939cf54292,hyderabad,Begumpet Police Station,17.319093,78.382688,Begumpet,Begumpet Sub-Division,100,True,True,7,10,19,8.5,True,2026-07-31T19:24:43.013218+00:00
+58834bc3-6d6b-491b-a263-3f0147fd702b,hyderabad,Banjara Hills Police Station,17.58488,78.540436,Banjara Hills,Banjara Hills Sub-Division,100,True,True,14,14,41,8.9,True,2026-07-31T19:24:43.013227+00:00
+9246b156-4c26-4d4d-848c-fcb1b2b71e72,hyderabad,Banjara Hills Police Station,17.309036,78.570962,Banjara Hills,Banjara Hills Sub-Division,100,True,True,7,10,22,8.6,True,2026-07-31T19:24:43.013234+00:00
+b94c1f78-d2e5-4d12-9f80-eebbad7fd442,hyderabad,Secunderabad Police Station,17.340121,78.320586,Secunderabad,Secunderabad Sub-Division,100,True,False,6,8,39,9.2,True,2026-07-31T19:24:43.013244+00:00
+47b98e71-2948-4ac2-b25b-de78e692fbb6,hyderabad,Banjara Hills Police Station,17.21266,78.377274,Banjara Hills,Banjara Hills Sub-Division,100,False,True,3,8,26,6.2,True,2026-07-31T19:24:43.013251+00:00
+b2f314c1-2538-4d19-8726-cc654a7dce92,hyderabad,Banjara Hills Police Station,17.590314,78.528122,Banjara Hills,Banjara Hills Sub-Division,100,True,True,6,13,10,8.3,True,2026-07-31T19:24:43.013259+00:00
+b1d5cbf6-c3db-4d8e-ae73-962e6b3c38bc,hyderabad,Banjara Hills Police Station,17.542688,78.421126,Banjara Hills,Banjara Hills Sub-Division,100,True,True,14,15,24,8.7,True,2026-07-31T19:24:43.013267+00:00
+5663651c-c037-4e08-9db5-cd50d5ce3df9,hyderabad,Begumpet Police Station,17.30648,78.488966,Begumpet,Begumpet Sub-Division,100,False,True,3,6,16,8.6,True,2026-07-31T19:24:43.013277+00:00
+883b63e8-6572-46ea-a00f-6d8d9b7d70b5,hyderabad,Kukatpally Police Station,17.466547,78.466657,Kukatpally,Kukatpally Sub-Division,100,True,True,12,6,13,8.4,True,2026-07-31T19:24:43.013284+00:00
+7c18e041-ab51-4547-b4b0-b9c7d50c0cce,hyderabad,Banjara Hills Police Station,17.331182,78.582063,Banjara Hills,Banjara Hills Sub-Division,100,True,True,9,15,50,6.1,True,2026-07-31T19:24:43.013292+00:00
+ca77bc01-83a0-43a3-a357-e4709fc23cee,hyderabad,Banjara Hills Police Station,17.513107,78.542017,Banjara Hills,Banjara Hills Sub-Division,100,True,True,6,8,41,9.3,True,2026-07-31T19:24:43.013299+00:00
+8041f9fe-272c-44a3-a21a-a497c0495ac1,hyderabad,Kukatpally Police Station,17.277182,78.332521,Kukatpally,Kukatpally Sub-Division,112,True,True,3,6,41,7.6,True,2026-07-31T19:24:43.013307+00:00
+7c0ce73c-d3a6-43a4-b9d3-13860638fa79,hyderabad,Begumpet Police Station,17.587654,78.39498,Begumpet,Begumpet Sub-Division,100,True,True,7,8,25,9.4,True,2026-07-31T19:24:43.013314+00:00
+2c518dbf-1200-4c0e-9392-7ea84547cc29,hyderabad,Hitech City Police Station,17.359518,78.329076,Hitech City,Hitech City Sub-Division,100,False,False,14,7,44,6.9,True,2026-07-31T19:24:43.013322+00:00
+fae74d31-4380-4196-9a1f-25873c3b42bb,hyderabad,Madhapur Police Station,17.344155,78.332186,Madhapur,Madhapur Sub-Division,112,False,False,5,14,47,7.0,True,2026-07-31T19:24:43.013330+00:00
+446b517f-e35f-459f-9273-c9eb13d31c95,hyderabad,Charminar Police Station,17.537541,78.324247,Charminar,Charminar Sub-Division,100,False,False,9,14,47,7.1,True,2026-07-31T19:24:43.013338+00:00
+75d4ed9e-242b-40a1-b9c2-79adb24ec2d2,hyderabad,Madhapur Police Station,17.397402,78.646687,Madhapur,Madhapur Sub-Division,100,True,True,5,14,48,9.0,True,2026-07-31T19:24:43.013345+00:00
+2b0b1a6c-71b3-473c-b468-0b14187fdbf4,hyderabad,Ameerpet Police Station,17.560089,78.42657,Ameerpet,Ameerpet Sub-Division,112,False,True,3,5,25,6.6,True,2026-07-31T19:24:43.013353+00:00
+d5caba7b-6b60-4726-ad2f-8a5924ebdd73,hyderabad,Hitech City Police Station,17.517105,78.49272,Hitech City,Hitech City Sub-Division,100,False,True,12,11,22,9.3,True,2026-07-31T19:24:43.013360+00:00
+e54d20f3-1b80-4ceb-815d-cd9a48f53dcc,hyderabad,Ameerpet Police Station,17.506944,78.331956,Ameerpet,Ameerpet Sub-Division,100,True,False,15,13,49,6.0,True,2026-07-31T19:24:43.013368+00:00
+dd8b4b7a-1099-47f7-a9c6-23d066c79a56,hyderabad,Charminar Police Station,17.484071,78.331139,Charminar,Charminar Sub-Division,112,False,True,6,9,41,7.7,True,2026-07-31T19:24:43.013375+00:00
+953b1c0f-c6c5-4eee-a184-27f625c9e9e4,hyderabad,Secunderabad Police Station,17.319829,78.475785,Secunderabad,Secunderabad Sub-Division,100,True,True,4,11,22,6.5,True,2026-07-31T19:24:43.013383+00:00
+981405ad-eac7-4088-9188-8c5e1ea8255f,hyderabad,Gachibowli Police Station,17.202107,78.383945,Gachibowli,Gachibowli Sub-Division,100,True,False,3,5,16,7.6,True,2026-07-31T19:24:43.013390+00:00
+19dba1c8-5040-46be-867b-8749e1be4387,hyderabad,Gachibowli Police Station,17.207227,78.316621,Gachibowli,Gachibowli Sub-Division,100,True,True,7,4,15,7.2,True,2026-07-31T19:24:43.013397+00:00
+3ecd8327-095d-48bd-aeb9-2b20f3768471,hyderabad,Kukatpally Police Station,17.42215,78.379417,Kukatpally,Kukatpally Sub-Division,100,False,True,11,10,32,9.4,True,2026-07-31T19:24:43.013405+00:00
+2f298a03-ab0e-4617-9c57-a6b68e6b2b9f,hyderabad,Charminar Police Station,17.205953,78.369488,Charminar,Charminar Sub-Division,100,False,True,11,12,26,9.3,True,2026-07-31T19:24:43.013412+00:00
+25158ea1-3c0e-4909-8d92-858d17a2da5d,hyderabad,Gachibowli Police Station,17.249959,78.559075,Gachibowli,Gachibowli Sub-Division,112,False,False,5,10,50,9.2,True,2026-07-31T19:24:43.013419+00:00
+78366361-a2ec-403b-a612-722849092eeb,hyderabad,Madhapur Police Station,17.252769,78.347614,Madhapur,Madhapur Sub-Division,100,True,True,8,8,38,7.6,True,2026-07-31T19:24:43.013427+00:00
+b302e814-9913-45c4-990b-a61c8fd7c0b7,hyderabad,Secunderabad Police Station,17.444483,78.424069,Secunderabad,Secunderabad Sub-Division,100,True,True,5,12,42,8.9,True,2026-07-31T19:24:43.013435+00:00
+fc599614-5633-435c-87e8-9be6091489eb,hyderabad,Begumpet Police Station,17.593614,78.649022,Begumpet,Begumpet Sub-Division,112,False,False,7,6,21,8.8,True,2026-07-31T19:24:43.013446+00:00
+960ab903-79c1-4bd4-8854-34734b6aba2a,hyderabad,Jubilee Hills Police Station,17.531972,78.45538,Jubilee Hills,Jubilee Hills Sub-Division,100,True,True,9,6,34,7.4,True,2026-07-31T19:24:43.013454+00:00
+a3557dce-d2bd-4105-a23d-839a36205a08,hyderabad,Madhapur Police Station,17.248975,78.609007,Madhapur,Madhapur Sub-Division,100,True,True,9,8,25,9.4,True,2026-07-31T19:24:43.013462+00:00
+347c20c1-8cf5-4592-8297-0799b0af9fd8,hyderabad,Charminar Police Station,17.257813,78.492135,Charminar,Charminar Sub-Division,112,True,True,6,14,13,7.4,True,2026-07-31T19:24:43.013469+00:00
+5be46338-0bac-4d8a-8a34-8816dde1fe80,hyderabad,Madhapur Police Station,17.323381,78.558942,Madhapur,Madhapur Sub-Division,100,True,False,14,9,11,6.0,True,2026-07-31T19:24:43.013477+00:00
+75763756-8b89-4a3a-9993-120a9bf0850e,hyderabad,Charminar Police Station,17.29564,78.540876,Charminar,Charminar Sub-Division,100,True,True,9,7,20,7.9,True,2026-07-31T19:24:43.013484+00:00
+6ec17927-c62d-4f85-b280-a9999981588d,hyderabad,Secunderabad Police Station,17.313834,78.483268,Secunderabad,Secunderabad Sub-Division,100,False,True,12,6,13,8.1,True,2026-07-31T19:24:43.013492+00:00
+5429201c-31cd-4c13-9613-74fde666f979,hyderabad,Charminar Police Station,17.274505,78.438684,Charminar,Charminar Sub-Division,100,False,False,4,13,23,7.3,True,2026-07-31T19:24:43.013527+00:00
+dcb0d364-31df-43cb-812b-fafedab97485,hyderabad,Secunderabad Police Station,17.466535,78.573232,Secunderabad,Secunderabad Sub-Division,100,True,True,8,12,19,8.5,True,2026-07-31T19:24:43.013537+00:00
+483b7675-e8c1-4fe8-9f98-26aee9e985cc,hyderabad,Banjara Hills Police Station,17.291773,78.5551,Banjara Hills,Banjara Hills Sub-Division,100,False,True,9,10,49,8.5,True,2026-07-31T19:24:43.013545+00:00
+f510077d-600e-476b-8cac-85125638935b,hyderabad,Madhapur Police Station,17.267173,78.380922,Madhapur,Madhapur Sub-Division,100,True,False,15,12,43,6.2,True,2026-07-31T19:24:43.013553+00:00
+3a3f2070-2265-4e70-9643-cc3d1c8c863f,hyderabad,Ameerpet Police Station,17.52121,78.49442,Ameerpet,Ameerpet Sub-Division,100,True,False,13,6,27,7.0,True,2026-07-31T19:24:43.013561+00:00
+d9336fa2-6c7a-40bb-957a-eb375ccdb2ff,hyderabad,Hitech City Police Station,17.412877,78.302576,Hitech City,Hitech City Sub-Division,100,False,True,5,3,39,8.4,True,2026-07-31T19:24:43.013569+00:00
+96501831-d54d-42e3-992a-77699807cc73,hyderabad,Begumpet Police Station,17.428334,78.515718,Begumpet,Begumpet Sub-Division,100,False,False,14,9,10,8.5,True,2026-07-31T19:24:43.013577+00:00
+1f707b41-c23b-4777-8623-458a0073a88e,hyderabad,Banjara Hills Police Station,17.406113,78.478925,Banjara Hills,Banjara Hills Sub-Division,100,True,True,15,7,35,6.7,True,2026-07-31T19:24:43.013586+00:00
+66b003c0-5ea8-416f-a1cd-948504710257,hyderabad,Secunderabad Police Station,17.323015,78.524821,Secunderabad,Secunderabad Sub-Division,100,False,True,10,6,13,9.0,True,2026-07-31T19:24:43.013593+00:00
+54dcde55-6e45-4acd-b36b-35d6c63cf687,hyderabad,Charminar Police Station,17.519936,78.646476,Charminar,Charminar Sub-Division,100,False,False,2,5,27,6.6,True,2026-07-31T19:24:43.013601+00:00
+5aba97fd-27ee-4842-ac50-fe7c3680f1cd,hyderabad,Madhapur Police Station,17.541101,78.311671,Madhapur,Madhapur Sub-Division,100,True,False,5,3,28,8.9,True,2026-07-31T19:24:43.013609+00:00
+8368a98d-27cb-4c72-8582-e4ddc92e3c17,hyderabad,Banjara Hills Police Station,17.397727,78.556095,Banjara Hills,Banjara Hills Sub-Division,100,True,False,7,12,48,6.4,True,2026-07-31T19:24:43.013617+00:00
+5a48f557-84cc-4de6-ab1b-6f39250703b5,hyderabad,Gachibowli Police Station,17.585424,78.458951,Gachibowli,Gachibowli Sub-Division,100,True,True,4,12,44,8.0,True,2026-07-31T19:24:43.013624+00:00
+bc5bfdad-a33a-4370-8d26-697980b222b5,hyderabad,Charminar Police Station,17.412144,78.631078,Charminar,Charminar Sub-Division,112,True,False,11,13,10,9.4,True,2026-07-31T19:24:43.013632+00:00
+8aa3d705-486f-4b56-a29b-5cb38df50e7a,hyderabad,Ameerpet Police Station,17.20855,78.608717,Ameerpet,Ameerpet Sub-Division,100,True,False,4,13,42,9.4,True,2026-07-31T19:24:43.013640+00:00
+1aa25235-50b1-4bf1-ba6b-f68a34558e48,hyderabad,Charminar Police Station,17.529862,78.462385,Charminar,Charminar Sub-Division,100,False,True,14,15,18,6.9,True,2026-07-31T19:24:43.013648+00:00
+5df71a03-616b-4dbf-80c1-68e8798fcce5,hyderabad,Secunderabad Police Station,17.270352,78.393398,Secunderabad,Secunderabad Sub-Division,100,True,False,13,10,48,8.3,True,2026-07-31T19:24:43.013656+00:00
+7412ec3e-9118-4ea3-a60b-00842cca2af5,hyderabad,Hitech City Police Station,17.241406,78.624926,Hitech City,Hitech City Sub-Division,112,True,True,7,9,30,6.2,True,2026-07-31T19:24:43.013664+00:00
+ee53912e-467c-4f93-8d59-db97813c88ae,hyderabad,Hitech City Police Station,17.32013,78.54808,Hitech City,Hitech City Sub-Division,100,True,True,11,10,30,8.4,True,2026-07-31T19:24:43.013672+00:00
+fdd9307c-f1c1-4e72-a0eb-09b6010e71a2,hyderabad,Ameerpet Police Station,17.225601,78.571186,Ameerpet,Ameerpet Sub-Division,100,False,False,8,9,32,6.8,True,2026-07-31T19:24:43.013679+00:00
+3eacc8ce-a331-4791-9397-babb02c5d130,hyderabad,Banjara Hills Police Station,17.295911,78.442356,Banjara Hills,Banjara Hills Sub-Division,100,True,False,15,4,30,7.3,True,2026-07-31T19:24:43.013687+00:00
+bb7eb45a-d359-4a03-ab55-392ffe7020d0,hyderabad,Hitech City Police Station,17.479692,78.322493,Hitech City,Hitech City Sub-Division,112,True,False,9,8,39,7.3,True,2026-07-31T19:24:43.013695+00:00
+144a44cd-3452-46ad-aa27-9e231cf27632,hyderabad,Madhapur Police Station,17.437512,78.39511,Madhapur,Madhapur Sub-Division,100,True,False,2,13,42,9.3,True,2026-07-31T19:24:43.013702+00:00
+b6ac8078-5790-4a59-a18f-72e0c77fe55a,hyderabad,Jubilee Hills Police Station,17.293063,78.353847,Jubilee Hills,Jubilee Hills Sub-Division,100,True,False,7,6,49,7.6,True,2026-07-31T19:24:43.013710+00:00
+5cb756f3-efc1-4a05-b7fa-dc8333490bd7,hyderabad,Secunderabad Police Station,17.468297,78.484987,Secunderabad,Secunderabad Sub-Division,100,True,True,7,14,31,6.4,True,2026-07-31T19:24:43.013718+00:00
+c7a01b86-8d2e-4a3e-ae9d-dccdc34615c4,hyderabad,Begumpet Police Station,17.235638,78.596939,Begumpet,Begumpet Sub-Division,100,True,False,11,5,18,6.7,True,2026-07-31T19:24:43.013725+00:00
+aec9273e-6df0-4a2f-a336-66ad190a634c,hyderabad,Kukatpally Police Station,17.262498,78.470556,Kukatpally,Kukatpally Sub-Division,100,True,True,11,9,35,9.1,True,2026-07-31T19:24:43.013734+00:00
+98d10aac-7051-4bf4-b57e-52b0d35cacfa,hyderabad,Begumpet Police Station,17.319795,78.595496,Begumpet,Begumpet Sub-Division,100,True,False,8,4,33,8.0,True,2026-07-31T19:24:43.013741+00:00
+23608ace-8885-454c-84cf-d04607c2f21f,hyderabad,Hitech City Police Station,17.370509,78.621179,Hitech City,Hitech City Sub-Division,100,True,True,3,15,34,6.6,True,2026-07-31T19:24:43.013749+00:00
+d324b68f-0134-420b-abe2-b9269b3d1b80,hyderabad,Madhapur Police Station,17.488244,78.402249,Madhapur,Madhapur Sub-Division,100,True,False,9,11,42,9.1,True,2026-07-31T19:24:43.013757+00:00
+2bcbdb83-11d4-4d3c-9330-6c4bcc930fd3,hyderabad,Charminar Police Station,17.275039,78.569839,Charminar,Charminar Sub-Division,100,True,False,2,4,45,7.5,True,2026-07-31T19:24:43.013765+00:00
+bb290569-2472-4a3a-a9b2-5edc449021d9,hyderabad,Gachibowli Police Station,17.580157,78.493512,Gachibowli,Gachibowli Sub-Division,112,True,False,6,8,25,9.4,True,2026-07-31T19:24:43.013772+00:00
+6a6a35d4-3cca-49f9-8d96-a6b4d8a50ad2,hyderabad,Charminar Police Station,17.582924,78.439286,Charminar,Charminar Sub-Division,100,False,False,14,11,46,8.7,True,2026-07-31T19:24:43.013780+00:00
+38e24630-47bf-40cd-8c0d-875bee19d33e,hyderabad,Begumpet Police Station,17.43359,78.410929,Begumpet,Begumpet Sub-Division,100,True,False,13,6,21,7.3,True,2026-07-31T19:24:43.013788+00:00
+c2002cdf-8b2e-45b3-ba23-4a3ed5508d80,hyderabad,Charminar Police Station,17.30245,78.502796,Charminar,Charminar Sub-Division,100,True,True,6,12,16,7.3,True,2026-07-31T19:24:43.013796+00:00
+9a36bc4e-4182-423e-8582-658c4bf7d892,hyderabad,Banjara Hills Police Station,17.556777,78.605365,Banjara Hills,Banjara Hills Sub-Division,100,True,False,5,14,48,7.5,True,2026-07-31T19:24:43.013803+00:00
+2b5f1281-7ece-4963-8b18-136987103e14,hyderabad,Banjara Hills Police Station,17.498055,78.56034,Banjara Hills,Banjara Hills Sub-Division,112,True,False,7,3,24,7.0,True,2026-07-31T19:24:43.013811+00:00
+1d796791-6397-4633-8f31-6e9a8765c141,hyderabad,Charminar Police Station,17.429361,78.505991,Charminar,Charminar Sub-Division,100,False,False,4,5,39,9.0,True,2026-07-31T19:24:43.013819+00:00
+00557946-c534-4f90-a060-3865bccb62b5,hyderabad,Hitech City Police Station,17.201199,78.402627,Hitech City,Hitech City Sub-Division,100,False,False,2,10,50,6.2,True,2026-07-31T19:24:43.013828+00:00
+4522f0b4-d0e7-4c44-bf18-d2fa63b97639,hyderabad,Secunderabad Police Station,17.587127,78.322661,Secunderabad,Secunderabad Sub-Division,100,True,True,6,15,27,9.0,True,2026-07-31T19:24:43.013835+00:00
+e0cbbd40-750f-48a1-9e77-fa34352d808f,hyderabad,Jubilee Hills Police Station,17.401256,78.322265,Jubilee Hills,Jubilee Hills Sub-Division,112,True,False,4,10,30,9.3,True,2026-07-31T19:24:43.013843+00:00
+3104b041-e0f3-48ee-9460-a358de181649,hyderabad,Gachibowli Police Station,17.299392,78.526345,Gachibowli,Gachibowli Sub-Division,100,True,False,12,11,26,6.2,True,2026-07-31T19:24:43.013851+00:00
+301ebb79-e1cb-48fc-ad54-d352004e321c,hyderabad,Gachibowli Police Station,17.436371,78.565062,Gachibowli,Gachibowli Sub-Division,100,True,True,15,10,28,7.6,True,2026-07-31T19:24:43.013859+00:00
+af3ecbf2-926c-4fef-a0a1-05814d182471,hyderabad,Kukatpally Police Station,17.566512,78.313403,Kukatpally,Kukatpally Sub-Division,100,True,False,13,4,11,7.3,True,2026-07-31T19:24:43.013866+00:00
+69d68677-e843-4ea4-9694-c7aaeca0574e,hyderabad,Hitech City Police Station,17.229702,78.629617,Hitech City,Hitech City Sub-Division,100,True,False,2,5,10,9.3,True,2026-07-31T19:24:43.013873+00:00
+d4df0900-26e7-44fe-8e54-e39250eabfaf,hyderabad,Gachibowli Police Station,17.367646,78.44294,Gachibowli,Gachibowli Sub-Division,100,True,False,5,15,47,7.7,True,2026-07-31T19:24:43.013881+00:00
+801578b5-7fee-45f4-9217-0e8d18606daf,hyderabad,Madhapur Police Station,17.552027,78.391557,Madhapur,Madhapur Sub-Division,100,True,True,2,14,10,6.8,True,2026-07-31T19:24:43.013888+00:00
+8a3d05ae-d3c2-40b7-bd71-f7a5780db549,hyderabad,Gachibowli Police Station,17.415359,78.560555,Gachibowli,Gachibowli Sub-Division,100,True,True,2,14,14,6.6,True,2026-07-31T19:24:43.013895+00:00
+28ce1b24-8045-4958-8cf1-d3b4eee61089,hyderabad,Jubilee Hills Police Station,17.269258,78.566644,Jubilee Hills,Jubilee Hills Sub-Division,100,True,False,8,11,32,7.6,True,2026-07-31T19:24:43.013903+00:00
+9092eba9-85ac-4a5a-ab05-95ad4cbb45d5,hyderabad,Gachibowli Police Station,17.449017,78.48192,Gachibowli,Gachibowli Sub-Division,100,True,False,8,7,21,6.3,True,2026-07-31T19:24:43.013910+00:00
+b7d8e0d0-19a4-4f08-8043-2d666054ec7e,hyderabad,Hitech City Police Station,17.407636,78.406005,Hitech City,Hitech City Sub-Division,100,True,True,2,10,15,8.2,True,2026-07-31T19:24:43.013917+00:00
+944bbf51-21b7-4eea-bdf9-6d6860af03e7,hyderabad,Madhapur Police Station,17.434513,78.510979,Madhapur,Madhapur Sub-Division,100,False,True,7,13,38,8.8,True,2026-07-31T19:24:43.013925+00:00
+a23c5c9a-7e33-49d5-89ba-8f25e8380ef5,hyderabad,Hitech City Police Station,17.468068,78.490354,Hitech City,Hitech City Sub-Division,112,False,True,15,8,48,8.1,True,2026-07-31T19:24:43.013933+00:00
+3cd5aa80-a56f-4e90-be61-0c4a510a6a56,hyderabad,Gachibowli Police Station,17.497832,78.393533,Gachibowli,Gachibowli Sub-Division,100,True,True,12,3,17,8.3,True,2026-07-31T19:24:43.013941+00:00
+0d80fa48-9426-4d8b-954b-5ef84dbac3e7,hyderabad,Charminar Police Station,17.385561,78.34367,Charminar,Charminar Sub-Division,100,True,False,5,14,34,7.2,True,2026-07-31T19:24:43.013949+00:00
+970aa943-9b82-4970-ac84-c44505f98073,hyderabad,Jubilee Hills Police Station,17.242103,78.617833,Jubilee Hills,Jubilee Hills Sub-Division,100,True,False,13,14,16,8.3,True,2026-07-31T19:24:43.013957+00:00
+1d651c30-5bac-4936-a5ae-f7cbaa18a236,hyderabad,Secunderabad Police Station,17.395274,78.510242,Secunderabad,Secunderabad Sub-Division,100,True,True,6,14,13,8.7,True,2026-07-31T19:24:43.013965+00:00
+722cdf18-15fb-4467-aeb2-9bd5ef632a94,hyderabad,Hitech City Police Station,17.375463,78.471976,Hitech City,Hitech City Sub-Division,100,False,False,12,14,43,8.2,True,2026-07-31T19:24:43.013978+00:00
+85c3c70b-c807-4743-a548-6078fbdb4dda,hyderabad,Charminar Police Station,17.587239,78.4477,Charminar,Charminar Sub-Division,112,True,False,8,10,33,7.2,True,2026-07-31T19:24:43.013986+00:00
+22b7b690-266d-4c19-a6fd-cd7dfba6c16d,hyderabad,Gachibowli Police Station,17.389421,78.516241,Gachibowli,Gachibowli Sub-Division,100,True,False,14,7,26,8.4,True,2026-07-31T19:24:43.013993+00:00
+5122e8b4-19cf-4e8d-b6d1-eea45bf82341,hyderabad,Secunderabad Police Station,17.561476,78.300305,Secunderabad,Secunderabad Sub-Division,100,False,False,5,10,13,9.0,True,2026-07-31T19:24:43.014001+00:00
+c317defa-3222-45d9-ba8f-22bf6d3e2f92,hyderabad,Jubilee Hills Police Station,17.509122,78.517905,Jubilee Hills,Jubilee Hills Sub-Division,100,True,False,11,7,22,6.7,True,2026-07-31T19:24:43.014009+00:00
+225c880f-068d-4ead-aa9a-75a356c28f0e,hyderabad,Hitech City Police Station,17.597267,78.392872,Hitech City,Hitech City Sub-Division,112,True,False,4,8,16,6.4,True,2026-07-31T19:24:43.014017+00:00
+4bd6e017-395e-47c6-b635-808232a83bfa,hyderabad,Kukatpally Police Station,17.211496,78.506186,Kukatpally,Kukatpally Sub-Division,100,True,True,7,12,27,6.5,True,2026-07-31T19:24:43.014025+00:00
+c7fbe090-efbe-417f-893d-7f5b066d2f92,hyderabad,Kukatpally Police Station,17.483542,78.480986,Kukatpally,Kukatpally Sub-Division,100,True,True,4,8,10,8.8,True,2026-07-31T19:24:43.014032+00:00
+52f98cf8-9c30-4943-bc3b-5f01d3eab26c,hyderabad,Ameerpet Police Station,17.558464,78.485301,Ameerpet,Ameerpet Sub-Division,100,True,False,10,9,26,7.7,True,2026-07-31T19:24:43.014040+00:00
+2614e43e-18cd-4e16-908a-e56b500751f0,hyderabad,Jubilee Hills Police Station,17.373968,78.631615,Jubilee Hills,Jubilee Hills Sub-Division,100,False,True,5,12,17,9.3,True,2026-07-31T19:24:43.014048+00:00
+27d83de1-3510-4893-b411-15066cd1afec,hyderabad,Kukatpally Police Station,17.515262,78.551615,Kukatpally,Kukatpally Sub-Division,112,True,False,3,10,20,9.0,True,2026-07-31T19:24:43.014066+00:00
+fb538190-ef14-4b91-a3e9-3e56da05839c,hyderabad,Ameerpet Police Station,17.230564,78.491538,Ameerpet,Ameerpet Sub-Division,100,False,True,7,5,29,6.5,True,2026-07-31T19:24:43.014074+00:00
+a6cf5ff3-9e4a-4725-a819-d9ad2bb359b4,hyderabad,Banjara Hills Police Station,17.364797,78.465621,Banjara Hills,Banjara Hills Sub-Division,100,False,False,3,14,39,7.7,True,2026-07-31T19:24:43.014082+00:00
+8bbff49a-492f-46e2-a55a-a20238e9f7e7,hyderabad,Begumpet Police Station,17.421523,78.339609,Begumpet,Begumpet Sub-Division,100,False,False,13,15,29,9.3,True,2026-07-31T19:24:43.014091+00:00
+5ce295ee-c496-4556-8f52-7702ecbfd4cc,hyderabad,Kukatpally Police Station,17.557608,78.453635,Kukatpally,Kukatpally Sub-Division,100,True,False,9,12,45,8.9,True,2026-07-31T19:24:43.014099+00:00
+5f8638af-8344-4403-9f02-7b98fabb0c28,hyderabad,Secunderabad Police Station,17.529966,78.585628,Secunderabad,Secunderabad Sub-Division,100,False,True,7,15,10,7.2,True,2026-07-31T19:24:43.014107+00:00

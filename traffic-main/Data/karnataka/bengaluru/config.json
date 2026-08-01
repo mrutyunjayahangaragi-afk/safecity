@@ -1,0 +1,15 @@
+{
+  "city_key":    "bengaluru",
+  "city_label":  "Bengaluru",
+  "state_key":   "karnataka",
+  "state_label": "Karnataka",
+  "pilot":       true,
+  "available":   true,
+  "dataset_file": "karnataka/bengaluru/crime_dataset.csv",
+  "model_file":   "karnataka/bengaluru/risk_model.pkl",
+  "center_lat":  12.9716,
+  "center_lon":  77.5946,
+  "zoom":        12,
+  "bbox": { "min_lat": 12.80, "max_lat": 13.15, "min_lon": 77.45, "max_lon": 77.80 },
+  "description": "Pilot deployment — AI-powered safe navigation for Bengaluru"
+}

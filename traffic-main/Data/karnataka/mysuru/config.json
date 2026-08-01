@@ -1,0 +1,15 @@
+{
+  "city_key":    "mysuru",
+  "city_label":  "Mysuru",
+  "state_key":   "karnataka",
+  "state_label": "Karnataka",
+  "pilot":       false,
+  "available":   false,
+  "dataset_file": "karnataka/mysuru/crime_dataset.csv",
+  "model_file":   "karnataka/mysuru/risk_model.pkl",
+  "center_lat":  12.2958,
+  "center_lon":  76.6394,
+  "zoom":        13,
+  "bbox": { "min_lat": 12.20, "max_lat": 12.40, "min_lon": 76.55, "max_lon": 76.75 },
+  "description": "Coming Soon — Dataset not yet available"
+}

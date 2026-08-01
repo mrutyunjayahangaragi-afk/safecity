@@ -1,0 +1,111 @@
+id,city,station_name,latitude,longitude,area,jurisdiction,emergency_number,women_helpdesk,cyber_cell,patrol_units,average_response_time_min,officers_available,safety_rating,open_24x7,last_updated
+3aa4b98c-66b4-4c0a-8f80-405b72c226e5,bengaluru,Koramangala Police Station,12.98569,77.550744,Koramangala,Koramangala Sub-Division,100,True,True,15,14,44,7.2,True,2026-07-31T19:24:42.992921+00:00
+f18d2fa5-385b-47fb-aa51-2d4fcb11c4f7,bengaluru,Jayanagar Police Station,13.046182,77.728066,Jayanagar,Jayanagar Sub-Division,100,True,False,3,11,12,9.1,True,2026-07-31T19:24:42.992958+00:00
+f5432ed1-c3fd-43d8-bc5b-3ee703230081,bengaluru,Yelahanka Police Station,12.885683,77.580735,Yelahanka,Yelahanka Sub-Division,100,False,True,7,5,26,9.1,True,2026-07-31T19:24:42.992976+00:00
+75c3afc3-b27e-45b2-9874-eae314679eca,bengaluru,BTM Layout Police Station,12.906921,77.723122,BTM Layout,BTM Layout Sub-Division,100,False,False,7,8,48,8.9,True,2026-07-31T19:24:42.992992+00:00
+b964a038-495a-4d51-88ef-0d2844ff7cbc,bengaluru,Jayanagar Police Station,12.852611,77.601758,Jayanagar,Jayanagar Sub-Division,100,True,False,13,4,35,8.6,True,2026-07-31T19:24:42.993041+00:00
+30c4aceb-ebea-4c21-84e9-7f2792862c8f,bengaluru,Koramangala Police Station,12.988035,77.666875,Koramangala,Koramangala Sub-Division,100,False,False,6,14,23,9.4,True,2026-07-31T19:24:42.993058+00:00
+81411760-579f-4e05-b6ab-004ecaea5a52,bengaluru,Electronic City Police Station,13.073225,77.599444,Electronic City,Electronic City Sub-Division,112,False,True,2,12,21,8.7,True,2026-07-31T19:24:42.993072+00:00
+bea33b21-02c2-4d3a-9adc-89d5cf73f2a4,bengaluru,Yelahanka Police Station,13.002666,77.528734,Yelahanka,Yelahanka Sub-Division,100,False,False,10,7,38,9.4,True,2026-07-31T19:24:42.993087+00:00
+ccc96626-4c7d-4ef3-8709-8cf5f33a8f58,bengaluru,Ashok Nagar Police Station,13.073412,77.649691,Ashok Nagar,Ashok Nagar Sub-Division,100,False,False,13,8,35,8.6,True,2026-07-31T19:24:42.993105+00:00
+90bc007b-99c8-41cc-afbf-83d0c0325461,bengaluru,Hebbal Police Station,12.950548,77.574576,Hebbal,Hebbal Sub-Division,100,False,True,2,12,45,6.3,True,2026-07-31T19:24:42.993118+00:00
+0a29ce6d-c8be-4353-b77c-9f31043c493e,bengaluru,Electronic City Police Station,13.022274,77.506803,Electronic City,Electronic City Sub-Division,100,True,True,4,15,24,6.5,True,2026-07-31T19:24:42.993129+00:00
+81ec2790-7d62-4dc5-99b7-4c9b5cc5a7a9,bengaluru,Yelahanka Police Station,12.95853,77.511146,Yelahanka,Yelahanka Sub-Division,100,False,True,13,12,20,8.0,True,2026-07-31T19:24:42.993141+00:00
+fa3dabc9-414e-4efa-b364-2ea26208c55a,bengaluru,Whitefield Police Station,12.85417,77.637336,Whitefield,Whitefield Sub-Division,100,False,True,12,11,50,6.7,True,2026-07-31T19:24:42.993154+00:00
+001bd432-c194-4a0b-b72a-f52d664e5da4,bengaluru,Electronic City Police Station,13.004116,77.761975,Electronic City,Electronic City Sub-Division,100,False,False,5,13,35,6.6,True,2026-07-31T19:24:42.993167+00:00
+3bbda51d-4561-4c37-8844-0e1655689854,bengaluru,Indiranagar Police Station,13.032228,77.551879,Indiranagar,Indiranagar Sub-Division,100,False,False,14,10,17,7.9,True,2026-07-31T19:24:42.993179+00:00
+ddac58ab-042f-48ed-91a9-78a15b9b6576,bengaluru,Jayanagar Police Station,12.88351,77.649435,Jayanagar,Jayanagar Sub-Division,100,False,False,3,11,17,7.0,True,2026-07-31T19:24:42.993191+00:00
+d161bb6f-f25c-4fa8-9eb0-4d49b33e9cac,bengaluru,BTM Layout Police Station,12.967192,77.619566,BTM Layout,BTM Layout Sub-Division,100,False,False,12,12,34,6.4,True,2026-07-31T19:24:42.993203+00:00
+acce4d36-1190-4c6b-b08e-8a7300532bcb,bengaluru,Cubbon Park Police Station,12.821372,77.588336,Cubbon Park,Cubbon Park Sub-Division,100,True,True,15,9,24,7.7,True,2026-07-31T19:24:42.993215+00:00
+68681257-fb11-41f9-a248-0cc4d241df94,bengaluru,Hebbal Police Station,13.088957,77.555415,Hebbal,Hebbal Sub-Division,100,True,False,8,13,33,9.5,True,2026-07-31T19:24:42.993228+00:00
+f23a5e51-b506-40e1-8ece-ea7abc808fb9,bengaluru,Koramangala Police Station,12.812076,77.750061,Koramangala,Koramangala Sub-Division,100,True,True,5,13,35,8.1,True,2026-07-31T19:24:42.993236+00:00
+97e1c486-cc28-4ef9-bcbd-4299957c519c,bengaluru,Whitefield Police Station,13.079355,77.689138,Whitefield,Whitefield Sub-Division,100,True,True,8,11,12,6.9,True,2026-07-31T19:24:42.993244+00:00
+ce3b9d60-caa7-4a2b-be64-e6b53e992aad,bengaluru,Whitefield Police Station,13.054458,77.701709,Whitefield,Whitefield Sub-Division,100,True,False,9,7,43,8.3,True,2026-07-31T19:24:42.993252+00:00
+aadab4f9-1d7a-4052-adce-28406be1eaad,bengaluru,Ashok Nagar Police Station,12.801268,77.532579,Ashok Nagar,Ashok Nagar Sub-Division,100,True,True,6,8,13,9.0,True,2026-07-31T19:24:42.993260+00:00
+ed2fa65f-555e-47f6-b430-aa7cee279fde,bengaluru,Electronic City Police Station,13.021063,77.788308,Electronic City,Electronic City Sub-Division,112,True,False,4,9,26,8.9,True,2026-07-31T19:24:42.993267+00:00
+29a2994d-8834-4e8b-a1a6-a4dc4f30dd81,bengaluru,Jayanagar Police Station,12.898817,77.652442,Jayanagar,Jayanagar Sub-Division,100,True,False,14,14,26,7.7,True,2026-07-31T19:24:42.993275+00:00
+6782b74c-1746-4bad-9e01-a9a93a88a7e0,bengaluru,Whitefield Police Station,13.013099,77.710913,Whitefield,Whitefield Sub-Division,100,False,False,9,11,45,6.0,True,2026-07-31T19:24:42.993283+00:00
+5d0e270d-45fc-4798-a1a6-dc6e3d8b2155,bengaluru,Hebbal Police Station,13.069785,77.648908,Hebbal,Hebbal Sub-Division,100,False,True,10,6,18,8.9,True,2026-07-31T19:24:42.993291+00:00
+5668bf07-7855-4cc2-9016-034d090bc3db,bengaluru,Electronic City Police Station,13.037613,77.788846,Electronic City,Electronic City Sub-Division,100,True,False,3,14,26,8.4,True,2026-07-31T19:24:42.993298+00:00
+1695266b-1835-4752-8b02-3becfadb40cc,bengaluru,Electronic City Police Station,12.859423,77.692058,Electronic City,Electronic City Sub-Division,100,True,True,6,13,17,8.5,True,2026-07-31T19:24:42.993307+00:00
+536fbf74-505c-4ee9-9b13-8f3aec54d1cd,bengaluru,Electronic City Police Station,12.922115,77.751667,Electronic City,Electronic City Sub-Division,100,True,True,11,12,27,8.4,True,2026-07-31T19:24:42.993315+00:00
+0d3d401d-fc43-4094-8ef0-d4cabf79dd2f,bengaluru,Yelahanka Police Station,12.967964,77.757015,Yelahanka,Yelahanka Sub-Division,100,True,True,4,5,26,7.9,True,2026-07-31T19:24:42.993322+00:00
+f6bee07d-3fa0-46b4-9fa4-96840c273d41,bengaluru,Hebbal Police Station,12.844149,77.584582,Hebbal,Hebbal Sub-Division,100,True,True,9,8,16,7.4,True,2026-07-31T19:24:42.993330+00:00
+09cd17e3-3139-43cf-8567-a62ec55aeeb6,bengaluru,Hebbal Police Station,13.025978,77.501533,Hebbal,Hebbal Sub-Division,100,False,True,12,9,10,6.6,True,2026-07-31T19:24:42.993338+00:00
+11bd65f6-6442-4d4f-81b8-e7ced79e99fc,bengaluru,Jayanagar Police Station,13.013278,77.774824,Jayanagar,Jayanagar Sub-Division,100,True,False,13,5,24,7.6,True,2026-07-31T19:24:42.993347+00:00
+190fe052-2ad7-4e56-8d64-a477dc7b1c70,bengaluru,Yelahanka Police Station,12.848698,77.588069,Yelahanka,Yelahanka Sub-Division,100,True,True,11,15,19,6.2,True,2026-07-31T19:24:42.993355+00:00
+cf9c1967-eb54-414e-88e4-fa2e8355d080,bengaluru,Electronic City Police Station,12.859722,77.732475,Electronic City,Electronic City Sub-Division,112,False,True,3,8,32,8.4,True,2026-07-31T19:24:42.993363+00:00
+56f1bebc-1361-404c-b739-00ff6a75c9b6,bengaluru,Indiranagar Police Station,12.986933,77.616206,Indiranagar,Indiranagar Sub-Division,100,True,True,14,11,29,9.2,True,2026-07-31T19:24:42.993370+00:00
+0d03ae1f-9c56-46d9-9b39-cb124605f153,bengaluru,Indiranagar Police Station,12.806439,77.771839,Indiranagar,Indiranagar Sub-Division,100,True,True,9,3,15,6.9,True,2026-07-31T19:24:42.993377+00:00
+9a54356f-ad08-4012-82d2-495eceb7bd51,bengaluru,Jayanagar Police Station,13.082188,77.740094,Jayanagar,Jayanagar Sub-Division,100,True,True,8,11,47,7.2,True,2026-07-31T19:24:42.993385+00:00
+c60632f5-e933-44cd-9da2-a9d0e8cc9aea,bengaluru,Yelahanka Police Station,13.073846,77.582418,Yelahanka,Yelahanka Sub-Division,100,True,True,4,8,37,7.4,True,2026-07-31T19:24:42.993393+00:00
+4d5e2f5d-58cc-49b1-8707-7ccfb64b1f9d,bengaluru,Electronic City Police Station,13.094375,77.512342,Electronic City,Electronic City Sub-Division,100,True,True,3,14,47,8.7,True,2026-07-31T19:24:42.993407+00:00
+5dc0d1d7-a537-4974-bbbb-b76564b5f6b0,bengaluru,Koramangala Police Station,12.970593,77.754215,Koramangala,Koramangala Sub-Division,100,True,False,6,14,17,6.7,True,2026-07-31T19:24:42.993415+00:00
+f0586484-b415-4138-b29a-78eee8d5e805,bengaluru,Whitefield Police Station,12.909968,77.644889,Whitefield,Whitefield Sub-Division,100,True,False,5,3,36,7.7,True,2026-07-31T19:24:42.993423+00:00
+8f82dcfd-168f-47a0-b5fe-ccdfbff3043d,bengaluru,BTM Layout Police Station,12.957767,77.763286,BTM Layout,BTM Layout Sub-Division,100,False,True,14,11,50,7.1,True,2026-07-31T19:24:42.993430+00:00
+09836397-71cb-4f1b-a28a-c15abd07937d,bengaluru,BTM Layout Police Station,13.037947,77.538892,BTM Layout,BTM Layout Sub-Division,100,False,True,4,13,40,9.1,True,2026-07-31T19:24:42.993437+00:00
+44654880-2c36-4b0f-b49c-92e533e4dcff,bengaluru,Ashok Nagar Police Station,12.81564,77.708934,Ashok Nagar,Ashok Nagar Sub-Division,100,True,False,13,8,25,8.7,True,2026-07-31T19:24:42.993445+00:00
+8c3d1ab1-81c1-410c-88f5-7bda0e83d78e,bengaluru,Hebbal Police Station,12.887945,77.653197,Hebbal,Hebbal Sub-Division,100,False,False,8,13,49,7.2,True,2026-07-31T19:24:42.993452+00:00
+2ab6fee6-9702-4067-b8b4-b1977d7348a1,bengaluru,BTM Layout Police Station,12.866105,77.555764,BTM Layout,BTM Layout Sub-Division,100,False,False,12,12,47,7.1,True,2026-07-31T19:24:42.993459+00:00
+58e5a8c4-611f-4e25-9e58-171cee674154,bengaluru,BTM Layout Police Station,12.848569,77.545715,BTM Layout,BTM Layout Sub-Division,100,False,True,15,8,39,6.7,True,2026-07-31T19:24:42.993467+00:00
+6056813c-3b40-4ce9-960f-042ea43c7795,bengaluru,Jayanagar Police Station,12.866372,77.556432,Jayanagar,Jayanagar Sub-Division,100,True,False,10,10,37,9.0,True,2026-07-31T19:24:42.993474+00:00
+a29c2d34-2683-478e-b6e3-db7f3cc546cc,bengaluru,Electronic City Police Station,12.986903,77.756206,Electronic City,Electronic City Sub-Division,100,True,True,9,15,12,8.0,True,2026-07-31T19:24:42.993483+00:00
+2186a05b-9531-4f89-b132-442656fcb97c,bengaluru,Electronic City Police Station,12.887481,77.754381,Electronic City,Electronic City Sub-Division,100,False,False,6,9,18,7.8,True,2026-07-31T19:24:42.993491+00:00
+8c043de2-7966-4f55-963c-7e2b257bb7e7,bengaluru,Indiranagar Police Station,13.089552,77.571146,Indiranagar,Indiranagar Sub-Division,100,False,True,4,7,47,6.7,True,2026-07-31T19:24:42.993500+00:00
+adb73e4d-64e0-4048-b983-d9f9829c241c,bengaluru,Jayanagar Police Station,13.030038,77.583828,Jayanagar,Jayanagar Sub-Division,100,True,False,3,9,31,9.4,True,2026-07-31T19:24:42.993507+00:00
+0ca459ef-eb22-4899-be0f-d90a5e6c2d01,bengaluru,Ashok Nagar Police Station,13.068175,77.523542,Ashok Nagar,Ashok Nagar Sub-Division,100,True,False,11,10,18,9.0,True,2026-07-31T19:24:42.993515+00:00
+f2c6ae5b-ece5-4d4f-b9bb-593eda36fee5,bengaluru,Ashok Nagar Police Station,12.88825,77.571165,Ashok Nagar,Ashok Nagar Sub-Division,100,False,False,5,4,17,8.7,True,2026-07-31T19:24:42.993522+00:00
+6b257944-f5ae-4c24-8681-76f1e3ef4c49,bengaluru,Ashok Nagar Police Station,12.952687,77.775812,Ashok Nagar,Ashok Nagar Sub-Division,100,False,True,8,14,35,9.3,True,2026-07-31T19:24:42.993530+00:00
+f896b2a5-c9d8-4e9e-90eb-9fe2e8802e08,bengaluru,Yelahanka Police Station,13.049381,77.533748,Yelahanka,Yelahanka Sub-Division,100,False,True,11,11,38,6.4,True,2026-07-31T19:24:42.993537+00:00
+d9350ed4-01d7-47c7-85e5-5c7db7e28824,bengaluru,Koramangala Police Station,12.92284,77.652787,Koramangala,Koramangala Sub-Division,100,True,False,15,13,43,9.1,True,2026-07-31T19:24:42.993545+00:00
+7cd0fbb3-8791-4532-880e-a4b955cbbe0c,bengaluru,Cubbon Park Police Station,12.811272,77.64333,Cubbon Park,Cubbon Park Sub-Division,112,True,False,14,13,27,9.4,True,2026-07-31T19:24:42.993553+00:00
+361f7d6a-4760-4dde-ab49-6de0faeda5b8,bengaluru,Electronic City Police Station,12.880162,77.704357,Electronic City,Electronic City Sub-Division,100,True,False,13,12,36,6.9,True,2026-07-31T19:24:42.993561+00:00
+8d629b34-e3f5-41c9-9426-ddb858b058e2,bengaluru,Yelahanka Police Station,12.981503,77.541003,Yelahanka,Yelahanka Sub-Division,100,True,False,8,11,10,8.0,True,2026-07-31T19:24:42.993569+00:00
+78dda59a-2608-4226-89f6-c3ac8657a35c,bengaluru,Indiranagar Police Station,12.920576,77.699155,Indiranagar,Indiranagar Sub-Division,100,True,True,14,9,10,8.0,True,2026-07-31T19:24:42.993576+00:00
+2027651f-16b2-4b7d-8c01-030016a6c156,bengaluru,Jayanagar Police Station,12.836742,77.619314,Jayanagar,Jayanagar Sub-Division,100,True,False,4,3,12,9.3,True,2026-07-31T19:24:42.993584+00:00
+d33fe5bd-99dd-401d-812c-5cee656d8bc8,bengaluru,Jayanagar Police Station,12.902728,77.528431,Jayanagar,Jayanagar Sub-Division,112,True,False,15,10,31,7.7,True,2026-07-31T19:24:42.993592+00:00
+6a1212d8-bc6e-485e-9ec6-d84d07e7a7c5,bengaluru,Ashok Nagar Police Station,12.909242,77.771057,Ashok Nagar,Ashok Nagar Sub-Division,100,False,False,7,11,19,9.1,True,2026-07-31T19:24:42.993601+00:00
+026fd9af-104f-46d8-ba78-0a248151a336,bengaluru,Koramangala Police Station,12.994698,77.691993,Koramangala,Koramangala Sub-Division,100,True,False,4,11,24,6.8,True,2026-07-31T19:24:42.993608+00:00
+0310cb6a-8183-4ddb-a108-1b84dabeef1f,bengaluru,Koramangala Police Station,12.835067,77.58394,Koramangala,Koramangala Sub-Division,100,True,False,4,11,37,7.1,True,2026-07-31T19:24:42.993616+00:00
+c8e3e3f1-c8df-4c8e-8209-05527b2f4043,bengaluru,BTM Layout Police Station,13.034935,77.532755,BTM Layout,BTM Layout Sub-Division,112,True,True,6,12,33,7.4,True,2026-07-31T19:24:42.993624+00:00
+a0141f75-fff7-487a-922c-0fe8ec7a5bdd,bengaluru,Jayanagar Police Station,12.841869,77.626656,Jayanagar,Jayanagar Sub-Division,100,True,False,4,11,48,6.2,True,2026-07-31T19:24:42.993631+00:00
+6f0d9988-1654-46af-bafc-3bd54e9e95b9,bengaluru,Cubbon Park Police Station,12.947892,77.516031,Cubbon Park,Cubbon Park Sub-Division,100,True,True,10,4,20,6.6,True,2026-07-31T19:24:42.993638+00:00
+b6e1b3ec-0b04-45bc-8f01-f08121fb4f74,bengaluru,BTM Layout Police Station,13.053123,77.645861,BTM Layout,BTM Layout Sub-Division,100,True,True,4,6,19,9.4,True,2026-07-31T19:24:42.993645+00:00
+86242e1f-2ffa-45f4-8d1c-6135d074e477,bengaluru,Electronic City Police Station,13.025938,77.647611,Electronic City,Electronic City Sub-Division,100,False,True,9,15,38,8.8,True,2026-07-31T19:24:42.993654+00:00
+72317712-ea7d-4d19-8a71-e2fd0a66b44d,bengaluru,BTM Layout Police Station,12.801387,77.766956,BTM Layout,BTM Layout Sub-Division,100,True,True,9,7,29,6.2,True,2026-07-31T19:24:42.993661+00:00
+baaf9a15-ad27-4c74-bc1c-c6353465d674,bengaluru,Whitefield Police Station,12.992068,77.523545,Whitefield,Whitefield Sub-Division,100,False,False,6,13,20,7.1,True,2026-07-31T19:24:42.993669+00:00
+10a17040-5974-46b2-9b2b-0f50f331556c,bengaluru,Yelahanka Police Station,13.026187,77.709646,Yelahanka,Yelahanka Sub-Division,100,True,False,12,6,10,6.7,True,2026-07-31T19:24:42.993676+00:00
+7cf7e5ce-0e5f-4ad5-9c13-5b380941e656,bengaluru,BTM Layout Police Station,12.981166,77.764283,BTM Layout,BTM Layout Sub-Division,100,True,False,7,11,23,8.1,True,2026-07-31T19:24:42.993684+00:00
+f3e741f8-d132-481a-a4b9-024953e8bc63,bengaluru,Jayanagar Police Station,12.890612,77.62038,Jayanagar,Jayanagar Sub-Division,112,True,True,4,15,46,9.5,True,2026-07-31T19:24:42.993693+00:00
+565a5244-6547-4f7f-826e-a1d24434b28c,bengaluru,Electronic City Police Station,12.837379,77.710609,Electronic City,Electronic City Sub-Division,100,False,True,8,14,16,8.1,True,2026-07-31T19:24:42.993701+00:00
+0180ccb1-fe65-4519-b37c-fdad0a54f5d2,bengaluru,Koramangala Police Station,13.026851,77.778259,Koramangala,Koramangala Sub-Division,100,False,False,8,13,33,7.8,True,2026-07-31T19:24:42.993708+00:00
+97d34cd3-54bf-4e53-9cec-39192f5486c8,bengaluru,Koramangala Police Station,12.836264,77.504189,Koramangala,Koramangala Sub-Division,100,False,True,13,15,28,9.1,True,2026-07-31T19:24:42.993716+00:00
+f7d9c66d-7ba1-469b-9736-4e93d50f2843,bengaluru,Whitefield Police Station,12.879361,77.711669,Whitefield,Whitefield Sub-Division,100,True,True,6,11,41,7.2,True,2026-07-31T19:24:42.993723+00:00
+f1b49e14-7ad8-45cb-b396-b96df685202b,bengaluru,Cubbon Park Police Station,12.819806,77.747526,Cubbon Park,Cubbon Park Sub-Division,100,True,False,4,3,21,7.5,True,2026-07-31T19:24:42.993731+00:00
+dc68211e-9975-433f-a2be-8f4120dcc8ea,bengaluru,Jayanagar Police Station,12.82126,77.551524,Jayanagar,Jayanagar Sub-Division,100,True,True,3,11,25,8.1,True,2026-07-31T19:24:42.993739+00:00
+045a0e5b-4894-42ae-adc0-8bd5cef3fb9b,bengaluru,Jayanagar Police Station,12.860451,77.518967,Jayanagar,Jayanagar Sub-Division,100,True,False,3,4,45,6.5,True,2026-07-31T19:24:42.993746+00:00
+ffc511cc-e601-4c93-9133-af129cd0580a,bengaluru,Koramangala Police Station,12.996595,77.545633,Koramangala,Koramangala Sub-Division,100,True,False,15,4,32,9.1,True,2026-07-31T19:24:42.993754+00:00
+b5de26b5-1563-43c4-bde0-8a48694a8726,bengaluru,Cubbon Park Police Station,12.911453,77.710959,Cubbon Park,Cubbon Park Sub-Division,100,True,True,15,5,18,8.2,True,2026-07-31T19:24:42.993761+00:00
+02cbf4b0-6c79-4650-a384-37cc7c5cda30,bengaluru,Jayanagar Police Station,12.802442,77.557281,Jayanagar,Jayanagar Sub-Division,100,True,True,6,13,13,7.7,True,2026-07-31T19:24:42.993769+00:00
+9e71c8ab-a295-4a09-8fc6-def6d6fb14ab,bengaluru,Koramangala Police Station,12.940153,77.737992,Koramangala,Koramangala Sub-Division,100,False,False,12,7,39,9.2,True,2026-07-31T19:24:42.993777+00:00
+58cc56ed-a95c-4b38-8d88-4f7fe14531fd,bengaluru,BTM Layout Police Station,12.981245,77.757316,BTM Layout,BTM Layout Sub-Division,100,False,True,13,4,48,7.6,True,2026-07-31T19:24:42.993784+00:00
+a68f817a-867c-46bb-a93b-4e1cf8aca1d1,bengaluru,Electronic City Police Station,12.823384,77.74547,Electronic City,Electronic City Sub-Division,100,True,False,7,12,37,9.3,True,2026-07-31T19:24:42.993792+00:00
+526d90d7-75ce-416f-994e-93ce2cac770b,bengaluru,Koramangala Police Station,13.052776,77.535602,Koramangala,Koramangala Sub-Division,100,True,True,7,5,40,7.9,True,2026-07-31T19:24:42.993800+00:00
+2fc16006-b464-44e3-8629-590a691d885e,bengaluru,Whitefield Police Station,13.062578,77.507122,Whitefield,Whitefield Sub-Division,100,True,False,4,3,11,7.2,True,2026-07-31T19:24:42.993809+00:00
+433dce4e-3c1c-42d6-b2a9-d8b8e0c78bf5,bengaluru,Indiranagar Police Station,13.022077,77.635172,Indiranagar,Indiranagar Sub-Division,100,False,True,3,8,35,8.6,True,2026-07-31T19:24:42.993817+00:00
+debcfb88-dfc1-4831-9766-5eb196a18f18,bengaluru,BTM Layout Police Station,13.000755,77.719415,BTM Layout,BTM Layout Sub-Division,100,True,True,13,13,27,6.8,True,2026-07-31T19:24:42.993825+00:00
+553c7c0b-51cd-4bb7-8dc0-fbf355b26f25,bengaluru,Whitefield Police Station,12.868302,77.695758,Whitefield,Whitefield Sub-Division,112,True,True,10,13,25,9.4,True,2026-07-31T19:24:42.993835+00:00
+9518c2b1-f784-49e8-b069-4c11a2f1d624,bengaluru,Cubbon Park Police Station,12.885308,77.610858,Cubbon Park,Cubbon Park Sub-Division,100,False,False,4,9,23,9.3,True,2026-07-31T19:24:42.993843+00:00
+34bcd980-048a-413a-b7a5-9e8e5ebdc823,bengaluru,Electronic City Police Station,12.945167,77.748513,Electronic City,Electronic City Sub-Division,100,True,True,10,9,35,8.8,True,2026-07-31T19:24:42.993850+00:00
+1cfb3ab9-c704-49ac-abfd-767c1539d5e2,bengaluru,Jayanagar Police Station,13.005435,77.559866,Jayanagar,Jayanagar Sub-Division,100,False,True,14,7,12,7.7,True,2026-07-31T19:24:42.993858+00:00
+d551aaa7-9fee-4880-a57e-ff43e0273e96,bengaluru,Electronic City Police Station,12.959236,77.721642,Electronic City,Electronic City Sub-Division,100,True,False,3,11,16,7.2,True,2026-07-31T19:24:42.993865+00:00
+a8f64472-a897-4a52-9434-033f0fe70a0d,bengaluru,Yelahanka Police Station,13.008852,77.706318,Yelahanka,Yelahanka Sub-Division,112,True,True,12,3,42,6.0,True,2026-07-31T19:24:42.993874+00:00
+d9b344e2-11fc-4bfc-bad4-483e12494b6c,bengaluru,Cubbon Park Police Station,12.888628,77.564981,Cubbon Park,Cubbon Park Sub-Division,100,True,True,6,12,41,6.8,True,2026-07-31T19:24:42.993881+00:00
+7c37bb47-c588-44bf-9dc0-4c4066211bf2,bengaluru,Indiranagar Police Station,12.880776,77.703663,Indiranagar,Indiranagar Sub-Division,100,True,False,8,15,46,6.8,True,2026-07-31T19:24:42.993889+00:00
+a1a4edb7-b7de-4b25-bb21-1911c42bfc7a,bengaluru,Koramangala Police Station,13.009786,77.605083,Koramangala,Koramangala Sub-Division,112,True,True,5,13,36,8.0,True,2026-07-31T19:24:42.993896+00:00
+ae2662c8-3588-4bf5-98b6-72a9963fa8e4,bengaluru,Hebbal Police Station,12.925657,77.596392,Hebbal,Hebbal Sub-Division,100,True,False,2,6,17,7.0,True,2026-07-31T19:24:42.993904+00:00
+0bb6374b-fa45-40ab-b134-78d3059ad727,bengaluru,Hebbal Police Station,13.021422,77.734067,Hebbal,Hebbal Sub-Division,100,True,False,15,6,10,8.5,True,2026-07-31T19:24:42.993911+00:00
+1300b6ab-964a-495d-b764-fcad6da478a6,bengaluru,Koramangala Police Station,13.059009,77.664475,Koramangala,Koramangala Sub-Division,100,True,True,3,14,34,7.9,True,2026-07-31T19:24:42.993918+00:00
+b9caafcb-dfaa-4cff-aadf-eb141b458f4f,bengaluru,Electronic City Police Station,12.984759,77.574355,Electronic City,Electronic City Sub-Division,100,False,True,4,9,44,6.1,True,2026-07-31T19:24:42.993927+00:00
+4e3e49b0-4f21-439e-bd0d-1cce848e12b8,bengaluru,Cubbon Park Police Station,12.852508,77.614171,Cubbon Park,Cubbon Park Sub-Division,100,True,False,7,13,48,6.3,True,2026-07-31T19:24:42.993935+00:00
+6fa785d6-06db-4dee-b9fa-d796c90e6634,bengaluru,Koramangala Police Station,13.012055,77.52864,Koramangala,Koramangala Sub-Division,100,True,False,8,13,10,7.6,True,2026-07-31T19:24:42.993943+00:00

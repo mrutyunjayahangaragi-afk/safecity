@@ -1,0 +1,15 @@
+{
+  "city_key":    "hubballi",
+  "city_label":  "Hubballi",
+  "state_key":   "karnataka",
+  "state_label": "Karnataka",
+  "pilot":       false,
+  "available":   false,
+  "dataset_file": "karnataka/hubballi/crime_dataset.csv",
+  "model_file":   "karnataka/hubballi/risk_model.pkl",
+  "center_lat":  15.3647,
+  "center_lon":  75.1240,
+  "zoom":        13,
+  "bbox": { "min_lat": 15.28, "max_lat": 15.45, "min_lon": 75.05, "max_lon": 75.22 },
+  "description": "Coming Soon — Dataset not yet available"
+}

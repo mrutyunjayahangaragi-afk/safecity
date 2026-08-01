@@ -1,0 +1,16 @@
+{
+  "name": "SafeRoute AI - Emergency Navigation",
+  "short_name": "SafeRoute",
+  "description": "Smart City Offline-First Emergency Navigation System",
+  "start_url": "/dashboard.html",
+  "display": "standalone",
+  "background_color": "#0d1117",
+  "theme_color": "#ff3366",
+  "icons": [
+    {
+      "src": "https://cdn-icons-png.flaticon.com/512/3592/3592058.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}

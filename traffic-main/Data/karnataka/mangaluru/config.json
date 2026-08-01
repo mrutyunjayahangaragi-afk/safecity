@@ -1,0 +1,15 @@
+{
+  "city_key":    "mangaluru",
+  "city_label":  "Mangaluru",
+  "state_key":   "karnataka",
+  "state_label": "Karnataka",
+  "pilot":       false,
+  "available":   false,
+  "dataset_file": "karnataka/mangaluru/crime_dataset.csv",
+  "model_file":   "karnataka/mangaluru/risk_model.pkl",
+  "center_lat":  12.9141,
+  "center_lon":  74.8560,
+  "zoom":        13,
+  "bbox": { "min_lat": 12.82, "max_lat": 13.02, "min_lon": 74.77, "max_lon": 74.94 },
+  "description": "Coming Soon — Dataset not yet available"
+}

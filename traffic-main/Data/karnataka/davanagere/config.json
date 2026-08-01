@@ -1,0 +1,15 @@
+{
+  "city_key":    "davanagere",
+  "city_label":  "Davanagere",
+  "state_key":   "karnataka",
+  "state_label": "Karnataka",
+  "pilot":       false,
+  "available":   false,
+  "dataset_file": "karnataka/davanagere/crime_dataset.csv",
+  "model_file":   "karnataka/davanagere/risk_model.pkl",
+  "center_lat":  14.4644,
+  "center_lon":  75.9218,
+  "zoom":        13,
+  "bbox": { "min_lat": 14.38, "max_lat": 14.55, "min_lon": 75.85, "max_lon": 75.99 },
+  "description": "Coming Soon — Dataset not yet available"
+}

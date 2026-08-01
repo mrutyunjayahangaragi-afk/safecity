@@ -1,0 +1,1309 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="description" content="Smart City Digital Twin — Real-time AI-powered city operations dashboard for Bengaluru by SafeRoute AI">
+<title>Smart City Digital Twin — SafeRoute AI</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+<link rel="manifest" href="/manifest.json">
+<script src="https://cdn.jsdelivr.net/npm/idb@7/build/umd.js"></script>
+<script src="/offline_db.js"></script>
+<style>
+/* ═══════════════════════════════════════════════════════════════════════
+   DESIGN SYSTEM — Smart City Digital Twin
+   ═══════════════════════════════════════════════════════════════════════ */
+:root {
+  --primary: #6366F1;
+  --primary-glow: rgba(99,102,241,0.4);
+  --secondary: #8B5CF6;
+  --accent: #06B6D4;
+  --accent-glow: rgba(6,182,212,0.35);
+  --success: #10B981;
+  --success-glow: rgba(16,185,129,0.3);
+  --warning: #F59E0B;
+  --warning-glow: rgba(245,158,11,0.3);
+  --danger: #EF4444;
+  --danger-glow: rgba(239,68,68,0.35);
+  --critical: #DC2626;
+
+  --bg-deep: #030712;
+  --bg-surface: rgba(15, 23, 42, 0.75);
+  --bg-elevated: rgba(30, 41, 59, 0.6);
+  --bg-hover: rgba(51, 65, 85, 0.5);
+  --border: rgba(148, 163, 184, 0.12);
+  --border-glow: rgba(99, 102, 241, 0.3);
+
+  --text: #F1F5F9;
+  --text-secondary: #94A3B8;
+  --text-muted: #64748B;
+
+  --glass-blur: 20px;
+  --radius: 16px;
+  --radius-sm: 10px;
+  --radius-xs: 6px;
+
+  --shadow: 0 8px 32px rgba(0,0,0,0.4), 0 0 0 1px rgba(148,163,184,0.06);
+  --shadow-glow: 0 0 30px var(--primary-glow), 0 8px 32px rgba(0,0,0,0.3);
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  background: var(--bg-deep);
+  color: var(--text);
+  font-family: 'Inter', -apple-system, sans-serif;
+  overflow: hidden;
+  height: 100vh;
+  width: 100vw;
+}
+
+/* ─── BOOT SEQUENCE ─── */
+#boot-screen {
+  position: absolute; inset: 0; z-index: 9999;
+  background: var(--bg-deep); display: flex; flex-direction: column;
+  justify-content: center; align-items: center;
+  font-family: 'JetBrains Mono', monospace; transition: opacity 1s ease-out;
+}
+.boot-text { color: var(--success); font-size: 14px; margin-bottom: 8px; text-shadow: 0 0 10px var(--success-glow); }
+.boot-cursor { display: inline-block; width: 10px; height: 16px; background: var(--success); animation: blink 1s step-end infinite; }
+@keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0; } }
+
+/* ─── MAP ─── */
+#map { position: absolute; inset: 0; z-index: 0; }
+
+.map-vignette {
+  position: absolute; inset: 0; z-index: 1; pointer-events: none;
+  background: radial-gradient(ellipse at 50% 50%, transparent 40%, rgba(3,7,18,0.6) 100%);
+}
+
+/* ─── MAP ANIMATIONS ─── */
+@keyframes vehicleBob {
+  0%, 100% { transform: translateY(0) scale(1); }
+  50% { transform: translateY(-3px) scale(1.05); }
+}
+@keyframes sosPulse {
+  0% { box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.7); }
+  70% { box-shadow: 0 0 0 15px rgba(239, 68, 68, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(239, 68, 68, 0); }
+}
+.animated-vehicle {
+  animation: vehicleBob 1.5s ease-in-out infinite;
+}
+.emergency-marker {
+  animation: sosPulse 1s infinite;
+}
+
+
+/* ─── HEADER ─── */
+.header {
+  position: absolute; top: 16px; left: 16px; right: 16px; z-index: 100;
+  display: flex; justify-content: space-between; align-items: center;
+  pointer-events: none;
+}
+.header > * { pointer-events: auto; }
+
+.logo-group {
+  display: flex; align-items: center; gap: 12px;
+  background: var(--bg-surface); backdrop-filter: blur(var(--glass-blur));
+  border: 1px solid var(--border); border-radius: var(--radius);
+  padding: 10px 18px; box-shadow: var(--shadow);
+  animation: fadeSlideDown 0.6s ease-out;
+}
+.logo-icon { font-size: 22px; }
+.logo-text {
+  font-family: 'Space Grotesk', sans-serif; font-weight: 800; font-size: 18px;
+  background: linear-gradient(135deg, var(--primary), var(--accent));
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+}
+.logo-badge {
+  font-size: 9px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px;
+  color: var(--accent); background: rgba(6,182,212,0.12);
+  padding: 3px 8px; border-radius: 4px;
+}
+
+.header-right { display: flex; gap: 10px; align-items: center; }
+
+.status-pill {
+  display: flex; align-items: center; gap: 6px;
+  background: var(--bg-surface); backdrop-filter: blur(var(--glass-blur));
+  border: 1px solid var(--border); border-radius: 20px;
+  padding: 8px 14px; font-size: 12px; font-weight: 500;
+  animation: fadeSlideDown 0.6s ease-out 0.1s both;
+}
+.status-dot {
+  width: 8px; height: 8px; border-radius: 50%;
+  background: var(--success); box-shadow: 0 0 8px var(--success-glow);
+  animation: statusPulse 2s infinite;
+}
+
+.nav-btn {
+  display: flex; align-items: center; gap: 6px;
+  padding: 10px 18px; background: var(--bg-surface);
+  backdrop-filter: blur(var(--glass-blur));
+  border: 1px solid var(--border); color: var(--text);
+  border-radius: var(--radius); cursor: pointer; text-decoration: none;
+  font-weight: 600; font-size: 13px; transition: all 0.3s;
+  animation: fadeSlideDown 0.6s ease-out 0.2s both;
+}
+.nav-btn:hover {
+  background: var(--bg-elevated); border-color: var(--border-glow);
+  box-shadow: var(--shadow-glow); transform: translateY(-1px);
+}
+
+/* ─── GLASS PANEL BASE ─── */
+.glass-panel {
+  background: var(--bg-surface);
+  backdrop-filter: blur(var(--glass-blur));
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  transition: border-color 0.3s, box-shadow 0.3s;
+}
+.glass-panel:hover {
+  border-color: rgba(148, 163, 184, 0.2);
+}
+
+.panel-title {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 13px; font-weight: 700;
+  text-transform: uppercase; letter-spacing: 1.5px;
+  color: var(--text-secondary); margin-bottom: 14px;
+  display: flex; align-items: center; gap: 8px;
+}
+
+/* ─── LEFT COLUMN: KPI + LAYERS ─── */
+.left-column {
+  position: absolute; top: 72px; left: 16px; bottom: 16px; z-index: 10;
+  width: 320px; display: flex; flex-direction: column; gap: 12px;
+  pointer-events: none; overflow-y: auto; scrollbar-width: none;
+}
+.left-column::-webkit-scrollbar { display: none; }
+.left-column > * { pointer-events: auto; animation: fadeSlideRight 0.5s ease-out both; }
+.left-column > *:nth-child(1) { animation-delay: 0.1s; }
+.left-column > *:nth-child(2) { animation-delay: 0.2s; }
+.left-column > *:nth-child(3) { animation-delay: 0.3s; }
+.left-column > *:nth-child(4) { animation-delay: 0.4s; }
+
+/* Safety Index Hero Card */
+.safety-hero { padding: 20px; position: relative; overflow: hidden; }
+.safety-hero::before {
+  content: ''; position: absolute; inset: 0;
+  background: linear-gradient(135deg, var(--primary-glow) 0%, transparent 50%);
+  opacity: 0.3; transition: opacity 0.5s;
+}
+.safety-hero:hover::before { opacity: 0.5; }
+.safety-label {
+  font-size: 11px; font-weight: 600; text-transform: uppercase;
+  letter-spacing: 1.5px; color: var(--text-secondary); margin-bottom: 6px;
+  position: relative;
+}
+.safety-score {
+  font-family: 'Space Grotesk', sans-serif; font-size: 52px; font-weight: 800;
+  line-height: 1; position: relative;
+  transition: color 0.5s;
+}
+.safety-suffix {
+  font-size: 20px; font-weight: 500; color: var(--text-muted);
+  margin-left: 2px;
+}
+.safety-bar-track {
+  height: 6px; background: rgba(255,255,255,0.08); border-radius: 3px;
+  margin-top: 12px; overflow: hidden; position: relative;
+}
+.safety-bar-fill {
+  height: 100%; border-radius: 3px;
+  transition: width 1s cubic-bezier(0.4,0,0.2,1), background 0.5s;
+}
+
+/* KPI Mini Grid */
+.kpi-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px; padding: 14px; }
+.kpi-cell {
+  text-align: center; padding: 12px 6px;
+  background: var(--bg-elevated); border-radius: var(--radius-sm);
+  border: 1px solid transparent; transition: all 0.3s; cursor: default;
+}
+.kpi-cell:hover {
+  border-color: var(--border-glow); transform: translateY(-2px);
+  box-shadow: 0 4px 16px rgba(0,0,0,0.3);
+}
+.kpi-icon { font-size: 18px; margin-bottom: 4px; }
+.kpi-value {
+  font-family: 'Space Grotesk', sans-serif; font-size: 20px; font-weight: 700;
+  color: var(--accent); line-height: 1.2;
+}
+.kpi-label {
+  font-size: 9px; font-weight: 600; text-transform: uppercase;
+  letter-spacing: 0.8px; color: var(--text-muted); margin-top: 2px;
+}
+
+/* Layers Panel */
+.layers-panel { padding: 16px; }
+.layer-row {
+  display: flex; justify-content: space-between; align-items: center;
+  padding: 8px 0;
+}
+.layer-row + .layer-row { border-top: 1px solid rgba(255,255,255,0.04); }
+.layer-info { display: flex; align-items: center; gap: 8px; }
+.layer-emoji { font-size: 16px; }
+.layer-name { font-size: 12px; font-weight: 500; }
+.layer-count {
+  font-size: 10px; color: var(--text-muted);
+  font-family: 'JetBrains Mono', monospace;
+}
+
+/* Toggle Switch */
+.toggle-switch {
+  position: relative; width: 36px; height: 20px;
+  appearance: none; -webkit-appearance: none;
+  background: rgba(255,255,255,0.1); border-radius: 10px;
+  cursor: pointer; transition: background 0.3s; outline: none; border: none;
+}
+.toggle-switch::after {
+  content: ''; position: absolute; top: 2px; left: 2px;
+  width: 16px; height: 16px; border-radius: 50%;
+  background: #fff; transition: transform 0.3s;
+}
+.toggle-switch:checked { background: var(--primary); }
+.toggle-switch:checked::after { transform: translateX(16px); }
+
+/* Emergency Command Center */
+.emergency-panel { padding: 16px; }
+.emergency-header {
+  display: flex; align-items: center; gap: 8px; margin-bottom: 12px;
+}
+.sos-badge {
+  font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 700;
+  background: var(--danger); color: white; padding: 3px 10px;
+  border-radius: 4px; animation: sosPulse 1.5s infinite;
+}
+.emergency-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+.emergency-stat {
+  background: var(--bg-elevated); border-radius: var(--radius-sm);
+  padding: 10px; text-align: center;
+}
+.emergency-stat-icon { font-size: 20px; margin-bottom: 4px; }
+.emergency-stat-val {
+  font-family: 'Space Grotesk', sans-serif; font-size: 16px; font-weight: 700;
+}
+.emergency-stat-label {
+  font-size: 9px; text-transform: uppercase; color: var(--text-muted);
+  letter-spacing: 0.5px; margin-top: 2px;
+}
+
+/* ─── RIGHT COLUMN: INSIGHTS + PREDICTIONS ─── */
+.right-column {
+  position: absolute; top: 72px; right: 16px; bottom: 16px; z-index: 10;
+  width: 360px; display: flex; flex-direction: column; gap: 12px;
+  pointer-events: none;
+}
+.right-column > * { pointer-events: auto; }
+
+/* AI Insights Panel */
+.insights-panel {
+  padding: 16px; flex: 1; display: flex; flex-direction: column;
+  min-height: 0; animation: fadeSlideLeft 0.5s ease-out 0.1s both;
+}
+.insights-header {
+  display: flex; justify-content: space-between; align-items: center;
+  margin-bottom: 12px;
+}
+.live-indicator {
+  display: flex; align-items: center; gap: 6px;
+  font-size: 10px; font-weight: 600; text-transform: uppercase;
+  letter-spacing: 1px; color: var(--danger);
+}
+.live-dot {
+  width: 8px; height: 8px; border-radius: 50%;
+  background: var(--danger); animation: statusPulse 1.5s infinite;
+}
+
+.insight-list {
+  flex: 1; overflow-y: auto; display: flex; flex-direction: column; gap: 8px;
+  scrollbar-width: thin; scrollbar-color: rgba(255,255,255,0.1) transparent;
+}
+.insight-list::-webkit-scrollbar { width: 3px; }
+.insight-list::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.15); border-radius: 3px; }
+
+.insight-card {
+  padding: 12px; border-radius: var(--radius-sm);
+  background: var(--bg-elevated); border: 1px solid var(--border);
+  border-left: 3px solid var(--accent);
+  transition: all 0.3s; animation: fadeIn 0.4s ease-out;
+}
+.insight-card:hover {
+  background: var(--bg-hover); transform: translateX(2px);
+}
+.insight-card.CRITICAL { border-left-color: var(--critical); background: rgba(220,38,38,0.08); }
+.insight-card.HIGH { border-left-color: var(--danger); }
+.insight-card.MEDIUM { border-left-color: var(--warning); }
+.insight-card.LOW { border-left-color: var(--success); }
+
+.insight-meta {
+  display: flex; justify-content: space-between; align-items: center;
+  margin-bottom: 6px;
+}
+.insight-category {
+  font-size: 9px; font-weight: 700; text-transform: uppercase;
+  letter-spacing: 1px; color: var(--text-muted);
+  background: rgba(255,255,255,0.05); padding: 2px 6px; border-radius: 3px;
+}
+.insight-severity {
+  font-size: 9px; font-weight: 700; padding: 2px 6px;
+  border-radius: 3px; text-transform: uppercase; letter-spacing: 0.5px;
+}
+.insight-severity.CRITICAL { background: rgba(220,38,38,0.2); color: var(--critical); }
+.insight-severity.HIGH { background: rgba(239,68,68,0.15); color: var(--danger); }
+.insight-severity.MEDIUM { background: rgba(245,158,11,0.15); color: var(--warning); }
+.insight-severity.LOW { background: rgba(16,185,129,0.15); color: var(--success); }
+
+.insight-msg { font-size: 12px; line-height: 1.5; color: var(--text-secondary); }
+
+/* Predictions Panel */
+.predictions-panel {
+  padding: 16px; animation: fadeSlideLeft 0.5s ease-out 0.3s both;
+}
+.pred-tabs {
+  display: flex; gap: 4px; margin-bottom: 14px;
+  background: rgba(255,255,255,0.05); border-radius: var(--radius-xs);
+  padding: 3px;
+}
+.pred-tab {
+  flex: 1; text-align: center; font-size: 11px; font-weight: 600;
+  padding: 6px 0; border-radius: 4px; cursor: pointer;
+  color: var(--text-muted); transition: all 0.3s; border: none;
+  background: transparent; font-family: 'Inter', sans-serif;
+}
+.pred-tab.active {
+  background: var(--primary); color: white; box-shadow: 0 2px 8px var(--primary-glow);
+}
+.pred-tab:hover:not(.active) { color: var(--text); }
+
+.pred-items { display: flex; flex-direction: column; gap: 10px; }
+.pred-item {
+  display: flex; align-items: center; gap: 10px;
+}
+.pred-icon { font-size: 16px; width: 24px; text-align: center; }
+.pred-info { flex: 1; }
+.pred-name { font-size: 11px; font-weight: 500; color: var(--text-secondary); margin-bottom: 4px; }
+.pred-bar-track {
+  height: 6px; background: rgba(255,255,255,0.06); border-radius: 3px;
+  overflow: hidden;
+}
+.pred-bar-fill {
+  height: 100%; border-radius: 3px; transition: width 1s cubic-bezier(0.4,0,0.2,1);
+  position: relative;
+}
+.pred-bar-fill::after {
+  content: ''; position: absolute; top: 0; right: 0; bottom: 0; left: 0;
+  background: linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.2) 100%);
+}
+.pred-val {
+  font-family: 'JetBrains Mono', monospace; font-size: 12px; font-weight: 500;
+  min-width: 36px; text-align: right;
+}
+.pred-confidence {
+  text-align: center; margin-top: 10px; padding-top: 10px;
+  border-top: 1px solid var(--border);
+  font-size: 11px; color: var(--text-muted);
+}
+.pred-confidence strong { color: var(--accent); font-weight: 700; }
+
+/* ─── BOTTOM CENTER: TIMELINE ─── */
+.bottom-center {
+  position: absolute; bottom: 16px; left: 50%; transform: translateX(-50%);
+  z-index: 10; pointer-events: auto;
+  animation: fadeSlideUp 0.5s ease-out 0.4s both;
+}
+.timestamp-pill {
+  display: flex; align-items: center; gap: 10px;
+  background: var(--bg-surface); backdrop-filter: blur(var(--glass-blur));
+  border: 1px solid var(--border); border-radius: 20px;
+  padding: 8px 16px; font-size: 12px;
+}
+.timestamp-pill .clock {
+  font-family: 'JetBrains Mono', monospace; font-weight: 500;
+  color: var(--accent);
+}
+.timestamp-pill .date { color: var(--text-muted); }
+.timestamp-pill .refresh-dot {
+  width: 6px; height: 6px; border-radius: 50%;
+  background: var(--success); animation: statusPulse 3s infinite;
+}
+
+/* ─── ANIMATIONS ─── */
+@keyframes fadeSlideDown {
+  from { opacity: 0; transform: translateY(-12px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+@keyframes fadeSlideRight {
+  from { opacity: 0; transform: translateX(-16px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+@keyframes fadeSlideLeft {
+  from { opacity: 0; transform: translateX(16px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+@keyframes fadeSlideUp {
+  from { opacity: 0; transform: translateY(12px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+@keyframes statusPulse {
+  0% { box-shadow: 0 0 0 0 currentColor; }
+  50% { box-shadow: 0 0 0 4px transparent; }
+  100% { box-shadow: 0 0 0 0 transparent; }
+}
+@keyframes sosPulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.6; }
+}
+@keyframes shimmer {
+  0% { background-position: -200% center; }
+  100% { background-position: 200% center; }
+}
+
+/* Leaflet Override */
+.leaflet-control-zoom { display: none !important; }
+.custom-div-icon { background: none !important; border: none !important; }
+
+/* ─── RESPONSIVE ─── */
+@media (max-width: 1200px) {
+  .left-column { width: 280px; }
+  .right-column { width: 300px; }
+}
+@media (max-width: 900px) {
+  .left-column { width: 240px; }
+  .right-column { width: 260px; }
+  .kpi-grid { grid-template-columns: 1fr 1fr; }
+  .safety-score { font-size: 40px; }
+}
+@media (max-width: 700px) {
+  .left-column, .right-column { display: none; }
+  .bottom-center { display: none; }
+}
+</style>
+</head>
+<body>
+
+<div id="boot-screen">
+  <div id="boot-log"></div>
+  <div class="boot-text"><span class="boot-cursor"></span></div>
+</div>
+
+<div id="map"></div>
+<div class="map-vignette"></div>
+
+<!-- ═══ HEADER ═══ -->
+<div class="header">
+  <div class="logo-group">
+    <span class="logo-icon">🏙️</span>
+    <span class="logo-text">Smart City Digital Twin</span>
+    <span class="logo-badge">Live</span>
+  </div>
+  <div class="header-right">
+    <div class="status-pill" id="dashboard-status">
+      <div class="status-dot"></div>
+      <span id="dashboard-status-text">System Online</span>
+    </div>
+    <a href="index.html" class="nav-btn">← SafeRoute AI</a>
+  </div>
+</div>
+
+<!-- ═══ LEFT COLUMN ═══ -->
+<div class="left-column">
+
+  <!-- Safety Index Hero -->
+  <div class="glass-panel safety-hero" id="safety-hero-card">
+    <div class="safety-label">Overall AI Safety Index</div>
+    <div class="safety-score" id="kpi-safety">
+      --<span class="safety-suffix">/100</span>
+    </div>
+    <div class="safety-bar-track">
+      <div class="safety-bar-fill" id="safety-bar" style="width: 0%;"></div>
+    </div>
+  </div>
+
+  <!-- KPI Grid -->
+  <div class="glass-panel">
+    <div class="kpi-grid">
+      <div class="kpi-cell" id="kpi-traffic-cell">
+        <div class="kpi-icon">🚦</div>
+        <div class="kpi-value" id="kpi-traffic">--</div>
+        <div class="kpi-label">Traffic</div>
+      </div>
+      <div class="kpi-cell" id="kpi-weather-cell">
+        <div class="kpi-icon">🌦️</div>
+        <div class="kpi-value" id="kpi-weather">--</div>
+        <div class="kpi-label">Weather</div>
+      </div>
+      <div class="kpi-cell" id="kpi-crowd-cell">
+        <div class="kpi-icon">👥</div>
+        <div class="kpi-value" id="kpi-crowd">--</div>
+        <div class="kpi-label">Crowd</div>
+      </div>
+      <div class="kpi-cell" id="kpi-hazards-cell">
+        <div class="kpi-icon">⚠️</div>
+        <div class="kpi-value" id="kpi-hazards">--</div>
+        <div class="kpi-label">Hazards</div>
+      </div>
+      <div class="kpi-cell" id="kpi-transport-cell">
+        <div class="kpi-icon">🚍</div>
+        <div class="kpi-value" id="kpi-transport">--</div>
+        <div class="kpi-label">Transit</div>
+      </div>
+      <div class="kpi-cell" id="kpi-parking-cell">
+        <div class="kpi-icon">🅿️</div>
+        <div class="kpi-value" id="kpi-parking">--</div>
+        <div class="kpi-label">Parking</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Live Overlay Layers -->
+  <div class="glass-panel layers-panel">
+    <div class="panel-title">
+      <span>🗺️</span> Map Overlays
+    </div>
+    <div class="layer-row">
+      <div class="layer-info">
+        <span class="layer-emoji">🚦</span>
+        <span class="layer-name">Traffic Flow</span>
+        <span class="layer-count" id="count-traffic">0</span>
+      </div>
+      <input type="checkbox" class="toggle-switch" id="layer-traffic" checked>
+    </div>
+    <div class="layer-row">
+      <div class="layer-info">
+        <span class="layer-emoji">🚧</span>
+        <span class="layer-name">Road Hazards</span>
+        <span class="layer-count" id="count-hazards">0</span>
+      </div>
+      <input type="checkbox" class="toggle-switch" id="layer-hazards" checked>
+    </div>
+    <div class="layer-row">
+      <div class="layer-info">
+        <span class="layer-emoji">👥</span>
+        <span class="layer-name">Crowd Density</span>
+        <span class="layer-count" id="count-crowd">0</span>
+      </div>
+      <input type="checkbox" class="toggle-switch" id="layer-crowd" checked>
+    </div>
+    <div class="layer-row">
+      <div class="layer-info">
+        <span class="layer-emoji">🚍</span>
+        <span class="layer-name">Public Transport</span>
+        <span class="layer-count" id="count-transport">0</span>
+      </div>
+      <input type="checkbox" class="toggle-switch" id="layer-transport" checked>
+    </div>
+    <div class="layer-row">
+      <div class="layer-info">
+        <span class="layer-emoji">🅿️</span>
+        <span class="layer-name">Parking Zones</span>
+        <span class="layer-count" id="count-parking">0</span>
+      </div>
+      <input type="checkbox" class="toggle-switch" id="layer-parking" checked>
+    </div>
+    <div class="layer-row">
+      <div class="layer-info">
+        <span class="layer-emoji">🚨</span>
+        <span class="layer-name">Emergency</span>
+        <span class="layer-count" id="count-emergency">0</span>
+      </div>
+      <input type="checkbox" class="toggle-switch" id="layer-emergency" checked>
+    </div>
+  </div>
+
+  <!-- Emergency Command Center -->
+  <div class="glass-panel emergency-panel">
+    <div class="panel-title">
+      <span>🚨</span> Emergency Command Center
+      <div class="sos-badge" id="sos-count">SOS: 0</div>
+    </div>
+    <div class="emergency-grid">
+      <div class="emergency-stat">
+        <div class="emergency-stat-icon">🚔</div>
+        <div class="emergency-stat-val" id="em-police">--</div>
+        <div class="emergency-stat-label">Police (min)</div>
+      </div>
+      <div class="emergency-stat">
+        <div class="emergency-stat-icon">🏥</div>
+        <div class="emergency-stat-val" id="em-hospital">--</div>
+        <div class="emergency-stat-label">Hospital (min)</div>
+      </div>
+      <div class="emergency-stat">
+        <div class="emergency-stat-icon">🚑</div>
+        <div class="emergency-stat-val" id="em-response">--</div>
+        <div class="emergency-stat-label">Avg Response</div>
+      </div>
+      <div class="emergency-stat">
+        <div class="emergency-stat-icon">📡</div>
+        <div class="emergency-stat-val" id="em-units">--</div>
+        <div class="emergency-stat-label">Units Active</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ RIGHT COLUMN ═══ -->
+<div class="right-column">
+
+  <!-- Live Charts Panel -->
+  <div class="glass-panel" style="padding: 16px;">
+    <div class="panel-title"><span>📈</span> LIVE TRENDS</div>
+    <div style="height: 180px; width: 100%; position: relative;">
+      <canvas id="liveChart"></canvas>
+    </div>
+  </div>
+
+  <!-- AI Insights Feed -->
+  <div class="glass-panel insights-panel">
+    <div class="insights-header">
+      <div class="panel-title" style="margin-bottom:0;">
+        <span>🤖</span> AI Insights
+      </div>
+      <div class="live-indicator">
+        <div class="live-dot"></div>
+        <span>LIVE</span>
+      </div>
+    </div>
+    <div class="insight-list" id="insights-container">
+      <!-- Insights injected dynamically -->
+    </div>
+  </div>
+
+  <!-- Predictive Analytics -->
+  <div class="glass-panel predictions-panel">
+    <div class="panel-title">
+      <span>📈</span> Predictive Analytics
+    </div>
+    <div class="pred-tabs">
+      <button class="pred-tab active" data-horizon="15" onclick="selectPredTab(this)">+15 min</button>
+      <button class="pred-tab" data-horizon="30" onclick="selectPredTab(this)">+30 min</button>
+      <button class="pred-tab" data-horizon="60" onclick="selectPredTab(this)">+60 min</button>
+    </div>
+    <div class="pred-items" id="pred-items">
+      <div class="pred-item">
+        <div class="pred-icon">🚦</div>
+        <div class="pred-info">
+          <div class="pred-name">Traffic Congestion</div>
+          <div class="pred-bar-track"><div class="pred-bar-fill" id="pred-traffic" style="width:0%;background:var(--primary);"></div></div>
+        </div>
+        <div class="pred-val" id="pred-traffic-val">--%</div>
+      </div>
+      <div class="pred-item">
+        <div class="pred-icon">🔴</div>
+        <div class="pred-info">
+          <div class="pred-name">Crime Risk</div>
+          <div class="pred-bar-track"><div class="pred-bar-fill" id="pred-crime" style="width:0%;background:var(--danger);"></div></div>
+        </div>
+        <div class="pred-val" id="pred-crime-val">--%</div>
+      </div>
+      <div class="pred-item">
+        <div class="pred-icon">👥</div>
+        <div class="pred-info">
+          <div class="pred-name">Crowd Density</div>
+          <div class="pred-bar-track"><div class="pred-bar-fill" id="pred-crowd" style="width:0%;background:var(--warning);"></div></div>
+        </div>
+        <div class="pred-val" id="pred-crowd-val">--%</div>
+      </div>
+      <div class="pred-item">
+        <div class="pred-icon">🌧️</div>
+        <div class="pred-info">
+          <div class="pred-name">Weather Severity</div>
+          <div class="pred-bar-track"><div class="pred-bar-fill" id="pred-weather" style="width:0%;background:var(--accent);"></div></div>
+        </div>
+        <div class="pred-val" id="pred-weather-val">--%</div>
+      </div>
+      <div class="pred-item">
+        <div class="pred-icon">🅿️</div>
+        <div class="pred-info">
+          <div class="pred-name">Parking Occupancy</div>
+          <div class="pred-bar-track"><div class="pred-bar-fill" id="pred-parking" style="width:0%;background:var(--secondary);"></div></div>
+        </div>
+        <div class="pred-val" id="pred-parking-val">--%</div>
+      </div>
+    </div>
+    <div class="pred-confidence" id="pred-confidence">
+      Model Confidence: <strong>--</strong>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ BOTTOM CENTER CLOCK ═══ -->
+<div class="bottom-center">
+  <div class="timestamp-pill">
+    <div class="refresh-dot"></div>
+    <span class="clock" id="live-clock">--:--:--</span>
+    <span class="date" id="live-date">----</span>
+  </div>
+</div>
+
+<!-- ═══ SCRIPTS ═══ -->
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script>
+// ═══════════════════════════════════════════════════════════════════════
+// SMART CITY DIGITAL TWIN — FRONTEND ENGINE
+// ═══════════════════════════════════════════════════════════════════════
+
+const SUPABASE_URL = 'https://dwrqfzqalxpyqagyfgmr.supabase.co';
+const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImR3cnFmenFhbHhweXFhZ3lmZ21yIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODU0MzQ1NjksImV4cCI6MjEwMTAxMDU2OX0.uqZNl2tNUrBLatlrF0age-qpvNX3fNj2IUlSF9ra2JY';
+let supabaseClient = null;
+try {
+  supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+  console.log('✅ Supabase client initialized in dashboard');
+} catch(e) { console.warn('Supabase init failed, using REST polling:', e); }
+
+const API_BASE = 'http://localhost:8000';
+let currentHorizon = 15;
+let allPredictions = [];
+
+// ─── CHARTS INITIALIZATION ──────────────────────────────────────────
+const LIVE_CHART_POINTS = 25;   // total slots kept in the sliding window
+let liveChart;
+function initCharts() {
+  const ctx = document.getElementById('liveChart').getContext('2d');
+
+  // Pre-fill with LIVE_CHART_POINTS empty labels and null data.
+  // null values are skipped by Chart.js (spanGaps:false) so no flat
+  // zero line appears before real data starts arriving.
+  const initLabels = Array(LIVE_CHART_POINTS).fill('');
+  const initData   = Array(LIVE_CHART_POINTS).fill(null);
+
+  const dsBase = { tension: 0.4, pointRadius: 2, pointHoverRadius: 5,
+                   borderWidth: 2, fill: true, spanGaps: false };
+
+  liveChart = new Chart(ctx, {
+    type: 'line',
+    data: {
+      labels: [...initLabels],
+      datasets: [
+        { ...dsBase, label: 'Traffic',
+          borderColor: '#6366F1', backgroundColor: 'rgba(99,102,241,0.10)',
+          data: [...initData] },
+        { ...dsBase, label: 'Crowd',
+          borderColor: '#F59E0B', backgroundColor: 'rgba(245,158,11,0.10)',
+          data: [...initData] },
+        { ...dsBase, label: 'Hazards',
+          borderColor: '#EF4444', backgroundColor: 'rgba(239,68,68,0.10)',
+          data: [...initData] }
+      ]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      layout: { padding: { top: 10, right: 24, bottom: 6, left: 24 } },
+      plugins: {
+        legend: {
+          display: true,
+          labels: { color: '#94A3B8', boxWidth: 10, font: { size: 10 } }
+        }
+      },
+      scales: {
+        x: {
+          display: true,
+          grid:  { color: 'rgba(255,255,255,0.04)', drawBorder: false },
+          ticks: {
+            color: '#475569', font: { size: 9 },
+            maxTicksLimit: 6, maxRotation: 0, autoSkip: true
+          }
+        },
+        y: {
+          display: true,
+          min: 0,
+          // No fixed max — Chart.js auto-scales from live values
+          grid:  { color: 'rgba(255,255,255,0.06)', drawBorder: false },
+          ticks: {
+            color: '#475569', font: { size: 9 },
+            maxTicksLimit: 4,
+            callback: v => (v != null ? Math.round(v) : '')
+          }
+        }
+      },
+      animation: { duration: 450, easing: 'easeInOutQuart' }
+    }
+  });
+}
+
+function updateCharts(m) {
+  if (!liveChart) return;
+  const now = new Date().toLocaleTimeString('en-IN', { hour12: false, hour: '2-digit', minute:'2-digit', second:'2-digit' });
+
+  const labels   = liveChart.data.labels;
+  const datasets = liveChart.data.datasets;
+
+  // Find the first null slot to fill — this populates from left to right
+  // once we run out of nulls, we slide the window (shift oldest, push newest)
+  const firstNull = labels.indexOf('');
+  if (firstNull !== -1) {
+    // Still in the "warm-up" phase — fill slots left-to-right
+    labels[firstNull]             = now;
+    datasets[0].data[firstNull]   = m.traffic_index        || 0;
+    datasets[1].data[firstNull]   = m.crowd_density_index  || 0;
+    datasets[2].data[firstNull]   = (m.hazard_count        || 0) * 10;
+  } else {
+    // Sliding window: drop oldest point, append newest
+    labels.shift();
+    labels.push(now);
+    datasets[0].data.shift(); datasets[0].data.push(m.traffic_index       || 0);
+    datasets[1].data.shift(); datasets[1].data.push(m.crowd_density_index || 0);
+    datasets[2].data.shift(); datasets[2].data.push((m.hazard_count       || 0) * 10);
+  }
+
+  liveChart.update('none'); // 'none' skips re-animation of existing points
+}
+
+// ─── MAP INITIALIZATION ─────────────────────────────────────────────
+const map = L.map('map', {
+  center: [12.9716, 77.5946],
+  zoom: 13,
+  zoomControl: false,
+  attributionControl: false
+});
+
+L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
+  maxZoom: 19
+}).addTo(map);
+
+// Layer groups
+const layers = {
+  traffic:   L.layerGroup().addTo(map),
+  hazards:   L.layerGroup().addTo(map),
+  crowd:     L.layerGroup().addTo(map),
+  transport: L.layerGroup().addTo(map),
+  parking:   L.layerGroup().addTo(map),
+  emergency: L.layerGroup().addTo(map)
+};
+
+// Toggle handlers
+document.querySelectorAll('.toggle-switch').forEach(input => {
+  input.addEventListener('change', (e) => {
+    const layerName = e.target.id.replace('layer-', '');
+    if (layers[layerName]) {
+      if (e.target.checked) map.addLayer(layers[layerName]);
+      else map.removeLayer(layers[layerName]);
+    }
+  });
+});
+
+// ─── CLOCK ──────────────────────────────────────────────────────────
+function updateClock() {
+  const now = new Date();
+  document.getElementById('live-clock').textContent = now.toLocaleTimeString('en-IN', { hour12: false });
+  document.getElementById('live-date').textContent = now.toLocaleDateString('en-IN', {
+    weekday: 'short', day: 'numeric', month: 'short', year: 'numeric'
+  });
+}
+setInterval(updateClock, 1000);
+updateClock();
+
+// ─── PREDICTION TAB SWITCH ──────────────────────────────────────────
+function selectPredTab(btn) {
+  document.querySelectorAll('.pred-tab').forEach(t => t.classList.remove('active'));
+  btn.classList.add('active');
+  currentHorizon = parseInt(btn.dataset.horizon);
+  renderPredictions();
+}
+
+function renderPredictions() {
+  const pred = allPredictions.find(p => p.time_horizon === currentHorizon);
+  if (!pred) return;
+
+  animateBar('pred-traffic',  pred.predicted_traffic_index);
+  animateBar('pred-crime',    pred.predicted_crime_risk);
+  animateBar('pred-crowd',    pred.predicted_crowd_density);
+  animateBar('pred-weather',  pred.predicted_weather_severity);
+  animateBar('pred-parking',  pred.predicted_parking_occupancy);
+
+  document.getElementById('pred-traffic-val').textContent = pred.predicted_traffic_index + '%';
+  document.getElementById('pred-crime-val').textContent   = pred.predicted_crime_risk + '%';
+  document.getElementById('pred-crowd-val').textContent   = pred.predicted_crowd_density + '%';
+  document.getElementById('pred-weather-val').textContent  = pred.predicted_weather_severity + '%';
+  document.getElementById('pred-parking-val').textContent  = pred.predicted_parking_occupancy + '%';
+
+  const conf = Math.round((pred.confidence_score || 0) * 100);
+  document.getElementById('pred-confidence').innerHTML =
+    `Model Confidence: <strong>${conf}%</strong>`;
+}
+
+function animateBar(id, value) {
+  const bar = document.getElementById(id);
+  if (bar) bar.style.width = Math.min(100, Math.max(0, value)) + '%';
+}
+
+// ─── COLOR HELPERS ──────────────────────────────────────────────────
+function safetyColor(val) {
+  if (val >= 75) return 'var(--success)';
+  if (val >= 50) return 'var(--warning)';
+  return 'var(--danger)';
+}
+function safetyGradient(val) {
+  if (val >= 75) return 'linear-gradient(90deg, #059669, #10B981)';
+  if (val >= 50) return 'linear-gradient(90deg, #D97706, #F59E0B)';
+  return 'linear-gradient(90deg, #DC2626, #EF4444)';
+}
+function congestionColor(level) {
+  if (level <= 0.3) return '#10B981';
+  if (level <= 0.6) return '#F59E0B';
+  if (level <= 0.8) return '#F97316';
+  return '#EF4444';
+}
+
+// ─── BOOT SEQUENCE ──────────────────────────────────────────────────
+async function runBootSequence() {
+  const steps = [
+    "Initializing Smart City Kernel...",
+    "Connecting to Supabase Realtime...",
+    "Loading Traffic Feeds...",
+    "Loading Weather API...",
+    "Initializing AI Insights Engine...",
+    "Loading Predictive Models...",
+    "Synchronizing IoT Sensors...",
+    "Rendering Digital Twin...",
+    "AI Safety Index Online."
+  ];
+  const logEl = document.getElementById('boot-log');
+  
+  for (let step of steps) {
+    const p = document.createElement('div');
+    p.className = 'boot-text';
+    p.textContent = `> ${step}`;
+    logEl.appendChild(p);
+    await new Promise(r => setTimeout(r, 400 + Math.random() * 400));
+  }
+  
+  await new Promise(r => setTimeout(r, 800));
+  const bootScreen = document.getElementById('boot-screen');
+  bootScreen.style.opacity = '0';
+  setTimeout(() => bootScreen.style.display = 'none', 1000);
+}
+
+// ─── MAIN DATA FETCH ────────────────────────────────────────────────
+async function fetchDashboard() {
+  try {
+    const res = await fetch(`${API_BASE}/city/dashboard`);
+    if (!res.ok) return;
+    const data = await res.json();
+
+    updateKPIs(data.metrics);
+    updateInsights(data.insights);
+
+    allPredictions = data.predictions || [];
+    renderPredictions();
+
+    updateMapLayers(data.layers);
+    updateEmergency(data.metrics);
+
+  } catch(err) {
+    console.error("Dashboard fetch error:", err);
+  }
+}
+
+// ─── KPI UPDATE ─────────────────────────────────────────────────────
+function updateKPIs(m) {
+  if (!m) return;
+  updateCharts(m);
+  const safety = m.overall_safety_index || 0;
+
+  // Safety hero
+  const safetyEl = document.getElementById('kpi-safety');
+  safetyEl.innerHTML = `${Math.round(safety)}<span class="safety-suffix">/100</span>`;
+  safetyEl.style.color = safetyColor(safety);
+
+  const bar = document.getElementById('safety-bar');
+  bar.style.width = safety + '%';
+  bar.style.background = safetyGradient(safety);
+
+  // Mini KPIs
+  setKPI('kpi-traffic', Math.round(m.traffic_index || 0));
+  setKPI('kpi-weather', Math.round(m.weather_severity_index || 0));
+  setKPI('kpi-crowd', Math.round(m.crowd_density_index || 0));
+  setKPI('kpi-hazards', m.hazard_count || 0);
+  setKPI('kpi-transport', Math.round(m.transport_efficiency || 0) + '%');
+  setKPI('kpi-parking', Math.round(m.parking_occupancy || 0) + '%');
+}
+
+function setKPI(id, value) {
+  const el = document.getElementById(id);
+  if (el) el.textContent = value;
+}
+
+// ─── EMERGENCY UPDATE ───────────────────────────────────────────────
+function updateEmergency(m) {
+  if (!m) return;
+  document.getElementById('sos-count').textContent = `SOS: ${m.sos_requests || 0}`;
+  document.getElementById('em-response').textContent = `${m.emergency_response_time || '--'}m`;
+  document.getElementById('em-units').textContent = m.active_navigation_sessions ? Math.round(m.active_navigation_sessions / 100) : '--';
+
+  // Estimate from metrics
+  document.getElementById('em-police').textContent = `${Math.max(3, (m.emergency_response_time || 8) - 2)}m`;
+  document.getElementById('em-hospital').textContent = `${Math.max(5, (m.emergency_response_time || 10) + 1)}m`;
+
+  // Pulse SOS badge if active
+  const badge = document.getElementById('sos-count');
+  if ((m.sos_requests || 0) > 0) {
+    badge.style.background = 'var(--danger)';
+  } else {
+    badge.style.background = 'var(--success)';
+    badge.style.animation = 'none';
+  }
+}
+
+// ─── INSIGHTS UPDATE ────────────────────────────────────────────────
+function updateInsights(insights) {
+  const container = document.getElementById('insights-container');
+  if (!insights || !insights.length) return;
+  container.innerHTML = '';
+
+  insights.forEach((ins, i) => {
+    const card = document.createElement('div');
+    card.className = `insight-card ${ins.severity}`;
+    card.style.animationDelay = (i * 0.08) + 's';
+    card.innerHTML = `
+      <div class="insight-meta">
+        <span class="insight-category">${ins.category}</span>
+        <span class="insight-severity ${ins.severity}">${ins.severity}</span>
+      </div>
+      <div class="insight-msg">${ins.message}</div>
+    `;
+    container.appendChild(card);
+  });
+}
+
+// ─── MAP LAYERS UPDATE ──────────────────────────────────────────────
+function updateMapLayers(layerData) {
+  if (!layerData) return;
+
+  Object.values(layers).forEach(lg => lg.clearLayers());
+
+  let counts = { traffic: 0, hazards: 0, crowd: 0, transport: 0, parking: 0, emergency: 0 };
+
+  // 1. TRAFFIC — polylines showing congestion
+  if (layerData.traffic && Array.isArray(layerData.traffic)) {
+    layerData.traffic.forEach(t => {
+      const lat = t.latitude || t.lat;
+      const lng = t.longitude || t.lng || t.lon;
+      if (!lat || !lng) return;
+
+      // Create a short line segment to represent the road
+      const offset = 0.003;
+      const angle = Math.random() * Math.PI;
+      const lat2 = lat + Math.cos(angle) * offset;
+      const lng2 = lng + Math.sin(angle) * offset;
+
+      const congestion = t.congestion_level || t.congestion || 0.5;
+      const color = congestionColor(congestion);
+
+      L.polyline([[lat, lng], [lat2, lng2]], {
+        color: color, weight: 5, opacity: 0.8
+      }).bindPopup(`
+        <b>${t.road || t.location || 'Road Segment'}</b><br>
+        Congestion: ${Math.round(congestion * 100)}%<br>
+        Speed: ${t.avg_speed || t.speed || '--'} km/h
+      `).addTo(layers.traffic);
+      counts.traffic++;
+    });
+  }
+
+  // 2. HAZARDS — warning markers
+  if (layerData.hazards && Array.isArray(layerData.hazards)) {
+    layerData.hazards.forEach(h => {
+      const lat = h.latitude || h.lat;
+      const lng = h.longitude || h.lng || h.lon;
+      if (!lat || !lng) return;
+
+      const severity = (h.severity || 'medium').toLowerCase();
+      const color = severity === 'high' ? '#EF4444' : severity === 'medium' ? '#F59E0B' : '#10B981';
+
+      L.circleMarker([lat, lng], {
+        radius: 10, color: color, fillColor: color, fillOpacity: 0.7, weight: 2
+      }).bindPopup(`
+        <b>⚠️ ${h.type || h.hazard_type || 'Hazard'}</b><br>
+        Severity: ${h.severity || 'Unknown'}<br>
+        ${h.description || ''}
+      `).addTo(layers.hazards);
+
+      // Add pulsing ring for high severity
+      if (severity === 'high') {
+        L.circle([lat, lng], {
+          radius: 150, color: '#EF4444', fillColor: '#EF4444',
+          fillOpacity: 0.08, weight: 1, dashArray: '4,4'
+        }).addTo(layers.hazards);
+      }
+      counts.hazards++;
+    });
+  }
+
+  // 3. CROWD — density circles
+  if (layerData.crowd && Array.isArray(layerData.crowd)) {
+    layerData.crowd.forEach(c => {
+      const lat = c.latitude || c.lat;
+      const lng = c.longitude || c.lng || c.lon;
+      if (!lat || !lng) return;
+
+      const density = c.density_level || c.density || 0.5;
+      const radius = 120 + density * 200;
+      const opacity = 0.15 + density * 0.25;
+
+      L.circle([lat, lng], {
+        radius: radius,
+        color: '#F59E0B', fillColor: '#F59E0B',
+        fillOpacity: opacity, weight: 1
+      }).bindPopup(`
+        <b>👥 ${c.location || c.area || 'Crowd Zone'}</b><br>
+        Density: ${c.density_label || Math.round(density * 100) + '%'}<br>
+        Est. Count: ${c.estimated_count || '--'}
+      `).addTo(layers.crowd);
+      counts.crowd++;
+    });
+  }
+
+  // 4. TRANSPORT — bus/metro markers
+  if (layerData.transport && Array.isArray(layerData.transport)) {
+    layerData.transport.forEach(t => {
+      const lat = t.latitude || t.lat;
+      const lng = t.longitude || t.lng || t.lon;
+      if (!lat || !lng) return;
+
+      const isMetro = t.type === 'metro';
+      const emoji = isMetro ? '🚇' : '🚍';
+      const statusColor = t.status === 'DELAYED' ? '#EF4444' : '#10B981';
+
+      L.marker([lat, lng], {
+        icon: L.divIcon({
+          className: 'custom-div-icon animated-vehicle',
+          html: `<div style="font-size:22px;filter:drop-shadow(0 2px 4px rgba(0,0,0,0.5));">${emoji}</div>`,
+          iconSize: [28, 28], iconAnchor: [14, 14]
+        })
+      }).bindPopup(`
+        <b>${emoji} ${t.route || 'Route'}</b><br>
+        Type: ${t.type}<br>
+        Occupancy: ${t.occupancy_percent || '--'}%<br>
+        Status: <span style="color:${statusColor};font-weight:bold;">${t.status || 'ON_TIME'}</span>
+      `).addTo(layers.transport);
+      counts.transport++;
+    });
+  }
+
+  // 5. PARKING — circle markers color-coded by occupancy
+  if (layerData.parking && Array.isArray(layerData.parking)) {
+    layerData.parking.forEach(p => {
+      const lat = p.latitude || p.lat;
+      const lng = p.longitude || p.lng || p.lon;
+      if (!lat || !lng) return;
+
+      const occ = p.occupancy_percent || 0;
+      const color = occ > 90 ? '#EF4444' : occ > 70 ? '#F59E0B' : occ > 40 ? '#6366F1' : '#10B981';
+
+      L.circleMarker([lat, lng], {
+        radius: 14, color: color, fillColor: color,
+        fillOpacity: 0.5, weight: 2
+      }).bindPopup(`
+        <b>🅿️ ${p.name || 'Parking Zone'}</b><br>
+        Occupancy: ${occ}%<br>
+        Capacity: ${p.capacity || '--'}<br>
+        Available: ${p.capacity ? (p.capacity - (p.occupied || 0)) : '--'}
+      `).addTo(layers.parking);
+      counts.parking++;
+    });
+  }
+
+  // 6. EMERGENCY — SOS pins (from metrics sos_requests)
+  // Add some emergency infrastructure markers
+  const emergencyLocations = [
+    { lat: 12.9352, lng: 77.6245, name: 'Koramangala Police', type: '🚔', color: '#6366F1' },
+    { lat: 12.9698, lng: 77.7500, name: 'Whitefield Fire Stn', type: '🚒', color: '#EF4444' },
+    { lat: 12.9577, lng: 77.5963, name: 'Victoria Hospital', type: '🏥', color: '#10B981' },
+    { lat: 12.9900, lng: 77.5510, name: 'Rajajinagar Police', type: '🚔', color: '#6366F1' },
+    { lat: 12.9141, lng: 77.6370, name: 'BTM Fire Station', type: '🚒', color: '#EF4444' },
+  ];
+  emergencyLocations.forEach(e => {
+    L.marker([e.lat, e.lng], {
+      icon: L.divIcon({
+        className: 'custom-div-icon emergency-marker',
+        html: `<div style="background:rgba(15,23,42,0.8); border: 2px solid ${e.color || '#10B981'}; padding: 4px; border-radius: 50%; font-size:18px; display:flex; align-items:center; justify-content:center; width: 32px; height: 32px; filter:drop-shadow(0 2px 6px rgba(0,0,0,0.6));">${e.type}</div>`,
+        iconSize: [36, 36], iconAnchor: [18, 18]
+      })
+    }).bindPopup(`<b>${e.type} ${e.name}</b>`).addTo(layers.emergency);
+    counts.emergency++;
+  });
+
+  // Update layer counts
+  Object.keys(counts).forEach(key => {
+    const el = document.getElementById(`count-${key}`);
+    if (el) el.textContent = counts[key];
+  });
+}
+
+// ─── INIT & POLLING / REALTIME ──────────────────────────────────────
+async function initDashboard() {
+  initCharts();
+  await runBootSequence();
+  await fetchDashboard();
+  
+  if (supabaseClient) {
+    console.log("Subscribing to Supabase Realtime 'city_updates'...");
+    supabaseClient.channel('city_updates')
+      .on('broadcast', { event: 'dashboard_update' }, (payload) => {
+        console.log("Realtime Update Received:", payload);
+        const data = payload.payload;
+        if (data.metrics) updateKPIs(data.metrics);
+        if (data.insights) updateInsights(data.insights);
+        if (data.predictions) {
+          allPredictions = data.predictions;
+          renderPredictions();
+        }
+        if (data.layers) updateMapLayers(data.layers);
+        if (data.metrics) updateEmergency(data.metrics);
+      })
+      .subscribe();
+  } else {
+    console.log("Falling back to REST polling...");
+    setInterval(fetchDashboard, 10000);
+  }
+}
+
+initDashboard();
+
+// PWA Service Worker & Offline Logic
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('/service-worker.js')
+      .then(reg => console.log('SW Registered', reg))
+      .catch(err => console.error('SW Registration failed', err));
+  });
+}
+
+function updateConnectionStatus() {
+  const badge = document.getElementById('dashboard-status');
+  const text = document.getElementById('dashboard-status-text');
+  if (!badge) return;
+  
+  if (navigator.onLine) {
+    text.innerText = 'System Online';
+    badge.style.background = 'rgba(16,185,129,0.1)';
+    badge.style.borderColor = 'rgba(16,185,129,0.3)';
+    badge.querySelector('.status-dot').style.background = '#10B981';
+    badge.querySelector('.status-dot').style.boxShadow = '0 0 8px #10B981';
+  } else {
+    text.innerText = 'Offline Snapshot';
+    badge.style.background = 'rgba(239,68,68,0.1)';
+    badge.style.borderColor = 'rgba(239,68,68,0.3)';
+    badge.querySelector('.status-dot').style.background = '#EF4444';
+    badge.querySelector('.status-dot').style.boxShadow = '0 0 8px #EF4444';
+  }
+}
+window.addEventListener('online', updateConnectionStatus);
+window.addEventListener('offline', updateConnectionStatus);
+document.addEventListener('DOMContentLoaded', updateConnectionStatus);
+
+</script>
+</body>
+</html>

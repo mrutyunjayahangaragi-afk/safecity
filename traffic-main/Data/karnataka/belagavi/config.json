@@ -1,0 +1,15 @@
+{
+  "city_key":    "belagavi",
+  "city_label":  "Belagavi",
+  "state_key":   "karnataka",
+  "state_label": "Karnataka",
+  "pilot":       false,
+  "available":   false,
+  "dataset_file": "karnataka/belagavi/crime_dataset.csv",
+  "model_file":   "karnataka/belagavi/risk_model.pkl",
+  "center_lat":  15.8497,
+  "center_lon":  74.4977,
+  "zoom":        13,
+  "bbox": { "min_lat": 15.78, "max_lat": 15.93, "min_lon": 74.42, "max_lon": 74.58 },
+  "description": "Coming Soon — Dataset not yet available"
+}
