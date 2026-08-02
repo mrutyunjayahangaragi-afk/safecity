@@ -69,7 +69,15 @@ _supabase_ready = _init_supabase()
 
 # ─── Paths ────────────────────────────────────────────────────────────────────
 _BASE      = os.path.dirname(os.path.abspath(__file__))
-_DATA_ROOT = os.path.join(_BASE, "../data")
+
+def _find_data_root_wr(base: str) -> str:
+    for name in ["data", "Data", "DATA"]:
+        p = os.path.normpath(os.path.join(base, "..", name))
+        if os.path.isdir(p):
+            return p
+    return os.path.normpath(os.path.join(base, "..", "data"))
+
+_DATA_ROOT = _find_data_root_wr(_BASE)
 
 def _weather_csv_path(state_key: str = "karnataka", city_key: str = "bengaluru") -> str:
     return os.path.join(_DATA_ROOT, state_key, city_key, "weather_dataset.csv")

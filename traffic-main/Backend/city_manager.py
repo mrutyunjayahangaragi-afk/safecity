@@ -39,7 +39,16 @@ from city_registry     import (
 
 # ─── Paths ────────────────────────────────────────────────────────────────────
 _BASE        = os.path.dirname(os.path.abspath(__file__))
-_DATA_ROOT   = os.path.join(_BASE, "../data")
+
+# Case-insensitive data root — handles both 'data' (Linux CI) and 'Data' (Windows dev)
+def _find_data_root(base: str) -> str:
+    for candidate in ["data", "Data", "DATA"]:
+        p = os.path.join(base, "..", candidate)
+        if os.path.isdir(p):
+            return os.path.normpath(p)
+    return os.path.normpath(os.path.join(base, "..", "data"))  # fallback
+
+_DATA_ROOT   = _find_data_root(_BASE)
 _MODELS_ROOT = os.path.join(_BASE, "../models")
 
 # Legacy fallback paths (original Bengaluru files — never deleted)

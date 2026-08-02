@@ -115,8 +115,18 @@ app.add_middleware(
 )
 
 # ─── Legacy path constants (kept for backward compat) ────────────────────────
-BASE       = os.path.dirname(__file__)
-DATA_PATH  = os.path.join(BASE, "../data/bangalore_crime_dataset.csv")
+BASE = os.path.dirname(os.path.abspath(__file__))
+
+def _resolve_data_root(base: str) -> str:
+    """Find the data directory regardless of case (Data vs data)."""
+    for name in ["data", "Data", "DATA"]:
+        p = os.path.normpath(os.path.join(base, "..", name))
+        if os.path.isdir(p):
+            return p
+    return os.path.normpath(os.path.join(base, "..", "data"))
+
+_DATA_ROOT_APP = _resolve_data_root(BASE)
+DATA_PATH  = os.path.join(_DATA_ROOT_APP, "bangalore_crime_dataset.csv")
 MODEL_PATH = os.path.join(BASE, "../models/risk_model.pkl")
 
 # ─── Module-level globals (populated from city_manager) ──────────────────────
