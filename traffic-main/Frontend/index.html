@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
@@ -3743,7 +3743,9 @@ function initAppMap() {
   notify('Ready. Routes follow real Bangalore roads via OSRM.', 'info');
   startWeatherAutoRefresh();
   _loadRecent();
-  _initSupabase();
+  // NOTE: _initSupabase() is now called on DOMContentLoaded (see bottom of Supabase section)
+  // so it is available on the landing page immediately, not just when the app map launches.
+  if (!_supabase) _initSupabase(); // idempotent guard if DOMContentLoaded already ran
 }
 
 let heatL, crimeL, policeL, safeL, routeL;
@@ -3854,6 +3856,39 @@ function scoreRouteGeometry(coords, hour) {
   }
   const avg = scores.reduce((a, b) => a + b, 0) / (scores.length || 1);
   return { scores, avg };
+}
+
+/* ═══════════════════════════════════════════════════
+   buildChart — in-app sidebar risk mini-chart
+   Renders a lightweight SVG sparkline whenever a
+   route is computed. Called from initAppMap().
+   If the chart container does not exist (landing page)
+   the function exits silently.
+═══════════════════════════════════════════════════ */
+function buildChart() {
+  var container = document.getElementById('chart-container');
+  if (!container) return; // not in app view — silently exit
+  // Render a placeholder SVG sparkline; will be updated by drawRoute() via updateChartData()
+  container.innerHTML = '<svg width="100%" height="48" viewBox="0 0 200 48" preserveAspectRatio="none" style="display:block">' +
+    '<polyline id="chart-line" points="0,40 40,32 80,20 120,28 160,16 200,24" fill="none" stroke="var(--accent)" stroke-width="2" opacity="0.7"/>' +
+    '<text x="4" y="10" fill="var(--text3)" font-size="8" font-family="sans-serif">ROUTE RISK</text>' +
+    '</svg>';
+}
+
+// Update the in-app chart with actual route risk scores after a route is computed
+function updateChartData(scores) {
+  var container = document.getElementById('chart-container');
+  if (!container || !scores || scores.length < 2) return;
+  var w = 200, h = 48, pad = 4;
+  var max = Math.max.apply(null, scores) || 1;
+  var step = (w - pad * 2) / (scores.length - 1);
+  var pts = scores.map(function(s, i) {
+    var x = pad + i * step;
+    var y = h - pad - (s / max) * (h - pad * 2);
+    return x.toFixed(1) + ',' + y.toFixed(1);
+  }).join(' ');
+  var line = document.getElementById('chart-line');
+  if (line) line.setAttribute('points', pts);
 }
 </script>
 
@@ -4712,7 +4747,8 @@ function togOsmLayer(type, show) {
     _osmAllPoi = _osmAllPoi.filter(function(p) { return p.type !== type; });
     _osmRenderPanel();
     // Close panel if no layers active
-    var anyActive = Object.values(_osmActiveTypes).some(Boolean);
+    // Use Object.keys() for ES5 compatibility (Object.values() not available on all mobile browsers)
+    var anyActive = Object.keys(_osmActiveTypes).map(function(k) { return _osmActiveTypes[k]; }).some(Boolean);
     if (!anyActive) closeNearbyPanel();
     return;
   }
@@ -5290,13 +5326,14 @@ function _onSignedIn(user) {
   document.getElementById('btn-login-nav') && (document.getElementById('btn-login-nav').style.display = 'none');
   closeAuthModal();
   notify('Welcome back, ' + name + '!', 'success');
-  _saveProfile(user, name);
+  // NOTE: _saveProfile() removed — _saveExtendedProfile() in the Auth v2 wrapper handles this
+  // to avoid double-write to Supabase on every sign-in.
   _loadRouteHistory();
   _startRealtime();
   var rhp = document.getElementById('route-history-panel');
   if (rhp) rhp.style.display = 'block';
-  // Update premium navbar profile button
-  if (typeof _updateNavbarProfile === 'function') _updateNavbarProfile(user);
+  // NOTE: _updateNavbarProfile() removed — the Auth v2 extended _onSignedIn wrapper calls it
+  // once after _saveExtendedProfile(), so it fires exactly once per sign-in.
 }
 
 function _onGuest() {
@@ -5436,6 +5473,13 @@ function _startRealtime() {
   console.log('✅ Realtime subscriptions active (' + _rtChannels.length + ' channels)');
 }
 function _stopRealtime() { _rtChannels.forEach(ch => { try { _supabase && _supabase.removeChannel(ch); } catch(e){} }); _rtChannels = []; }
+
+// ─── EARLY SUPABASE INIT — fires on DOMContentLoaded so auth state is available
+// immediately on the landing page, not just when the user clicks 'Launch App'.
+// This is the canonical init point; initAppMap() has a guard that skips if already init.
+document.addEventListener('DOMContentLoaded', function() {
+  if (!_supabase) _initSupabase();
+});
 
 /* ══════════════════════════════════════════════════
    AUTH v2 — EXTENDED AUTHENTICATION SYSTEM
@@ -5729,9 +5773,36 @@ async function doResendOTP() {
   if (_otpRetryCount >= _MAX_OTP_RETRIES) {
     document.getElementById('otp-retry-limit').style.display = 'block'; return;
   }
+  if (!_pendingPhone) {
+    // No pending phone — fall back to showing step 1 so user can re-enter
+    clearInterval(_otpTimer);
+    document.getElementById('phone-step-1').style.display = 'block';
+    document.getElementById('phone-step-2').style.display = 'none';
+    return;
+  }
+  // Re-send OTP to the already-captured phone number — no need for user to re-enter
   clearInterval(_otpTimer);
-  document.getElementById('phone-step-1').style.display = 'block';
-  document.getElementById('phone-step-2').style.display = 'none';
+  _setBusy('btn-resend-otp', null, null, true);
+  try {
+    var res = await _supabase.auth.signInWithOtp({ phone: _pendingPhone });
+    if (res.error) {
+      _authErr(res.error.message);
+    } else {
+      _otpRetryCount++;
+      document.getElementById('otp-sent-to').textContent = _pendingPhone;
+      // Clear previous OTP digits
+      document.querySelectorAll('.otp-digit').forEach(function(d) { d.value = ''; });
+      document.getElementById('auth-err').style.display = 'none';
+      _startOTPTimer(60);
+      var digits = document.querySelectorAll('.otp-digit');
+      if (digits[0]) digits[0].focus();
+      _authOk('New OTP sent to ' + _pendingPhone);
+    }
+  } catch (e) {
+    _authErr('Failed to resend OTP: ' + e.message);
+  } finally {
+    _setBusy('btn-resend-otp', null, null, false);
+  }
 }
 
 function resetPhoneForm() {
@@ -6007,14 +6078,87 @@ async function uploadAvatar(input) {
 }
 
 // ─── PASSWORD RESET HANDLER (after redirect) ───────────────────────────────────
+// Uses an in-modal form instead of the blocked window.prompt() which fails on mobile
+// and under Content-Security-Policy headers.
 function _promptPasswordReset() {
   if (!_supabase) return;
-  var newPass = prompt('Enter your new password (min 6 characters):');
-  if (!newPass || newPass.length < 6) { notify('Password must be at least 6 characters.', 'danger'); return; }
-  _supabase.auth.updateUser({ password: newPass }).then(function(res) {
-    if (res.error) notify('Password update failed: ' + res.error.message, 'danger');
-    else { notify('Password updated successfully ✓', 'success'); history.replaceState(null, '', window.location.pathname); }
+  // Inject an inline password reset form into the auth modal and switch to it
+  var resetFormId = 'form-reset-password';
+  var existing = document.getElementById(resetFormId);
+  if (!existing) {
+    var div = document.createElement('div');
+    div.id = resetFormId;
+    div.style.display = 'none';
+    div.innerHTML = [
+      '<div style="font-size:13px;color:var(--text2);margin-bottom:16px;line-height:1.6">',
+        'Enter a new password for your account.',
+      '</div>',
+      '<label class="lbl">New Password</label>',
+      '<div style="position:relative">',
+        '<input class="inp" id="reset-new-pass" type="password" placeholder="Min 6 characters" autocomplete="new-password" style="padding-right:40px">',
+        '<button type="button" onclick="togglePassVis(&#39;reset-new-pass&#39;,this)" style="position:absolute;right:10px;top:50%;transform:translateY(-50%);background:none;border:none;cursor:pointer;color:var(--text3);font-size:14px">👁</button>',
+      '</div>',
+      '<label class="lbl">Confirm Password</label>',
+      '<input class="inp" id="reset-confirm-pass" type="password" placeholder="Repeat password" autocomplete="new-password">',
+      '<button class="btn btn-p" id="btn-reset-submit" onclick="doResetPassword()" style="margin-top:12px">',
+        '<span id="reset-btn-text">Set New Password →</span>',
+        '<span id="reset-btn-spin" style="display:none">⟳ Updating…</span>',
+      '</button>',
+    ].join('');
+    // Append to auth-box
+    var authBox = document.querySelector('.auth-box');
+    if (authBox) authBox.appendChild(div);
+  }
+  // Switch to the reset form
+  var tabs = ['login','register','phone','forgot'];
+  tabs.forEach(function(t) {
+    var el = document.getElementById('form-' + t);
+    if (el) el.style.display = 'none';
   });
+  var social = document.getElementById('auth-social-btns');
+  if (social) social.style.display = 'none';
+  var tabBar = document.querySelector('.auth-tabs');
+  if (tabBar) tabBar.style.display = 'none';
+  var resetForm = document.getElementById(resetFormId);
+  if (resetForm) resetForm.style.display = 'block';
+  document.getElementById('auth-err').style.display = 'none';
+  document.getElementById('auth-ok').style.display = 'none';
+  showAuthModal();
+}
+
+async function doResetPassword() {
+  if (!_supabase) return;
+  var p1 = document.getElementById('reset-new-pass');
+  var p2 = document.getElementById('reset-confirm-pass');
+  if (!p1 || !p2) return;
+  var pass = p1.value, conf = p2.value;
+  if (!pass || pass.length < 6) { _authErr('Password must be at least 6 characters.'); return; }
+  if (pass !== conf) { _authErr('Passwords do not match.'); return; }
+  _setBusy('btn-reset-submit', 'reset-btn-text', 'reset-btn-spin', true);
+  try {
+    var res = await _supabase.auth.updateUser({ password: pass });
+    if (res.error) {
+      _authErr('Update failed: ' + res.error.message);
+    } else {
+      _authOk('Password updated successfully ✓');
+      history.replaceState(null, '', window.location.pathname);
+      // Restore auth modal to login tab after 2s
+      setTimeout(function() {
+        var tabBar = document.querySelector('.auth-tabs');
+        if (tabBar) tabBar.style.display = '';
+        var social = document.getElementById('auth-social-btns');
+        if (social) social.style.display = 'block';
+        var resetForm = document.getElementById('form-reset-password');
+        if (resetForm) resetForm.style.display = 'none';
+        if (_currentUser) closeAuthModal();
+        else switchAuthTab('login');
+      }, 2000);
+    }
+  } catch (e) {
+    _authErr('Update failed: ' + e.message);
+  } finally {
+    _setBusy('btn-reset-submit', 'reset-btn-text', 'reset-btn-spin', false);
+  }
 }
 
 // ─── TRACK SESSION PERSISTENCE ────────────────────────────────────────────────
@@ -6981,7 +7125,6 @@ document.addEventListener('keydown', function(e) {
     if (dModal && dModal.style.display === 'flex') dModal.style.display = 'none';
   }
 });
-</script>
 </script>
 
 </body>
