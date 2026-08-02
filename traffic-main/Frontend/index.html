@@ -2205,6 +2205,86 @@ html { scroll-behavior: smooth; -webkit-overflow-scrolling: touch; }
 @media (max-width: 480px) {
   .leaflet-control-attribution { font-size: 8px !important; max-width: 120px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 }
+
+/* ══════════════════════════════════════════════════
+   HERO CENTERING — Perfect alignment all breakpoints
+══════════════════════════════════════════════════ */
+#hero {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  width: 100%;
+}
+#hero > div {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  max-width: min(900px, 100%);
+  margin: 0 auto;
+  padding: 0 clamp(16px, 4vw, 32px);
+}
+.hero-badge {
+  align-self: center;
+  text-align: center;
+}
+.hero-title {
+  text-align: center;
+  width: 100%;
+}
+.hero-subtitle {
+  text-align: center;
+  margin-left: auto;
+  margin-right: auto;
+  max-width: 600px;
+  width: 100%;
+}
+.hero-tags {
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  max-width: 700px;
+}
+.hero-actions {
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+}
+.hero-stats {
+  align-self: center;
+  width: 100%;
+  max-width: min(820px, 100%);
+}
+
+/* Mobile hero centering */
+@media (max-width: 768px) {
+  #hero > div { padding: 0 16px; }
+  .hero-actions { flex-direction: column; align-items: center; }
+  .btn-hero-primary,
+  .btn-hero-secondary { width: 100%; max-width: 320px; justify-content: center; }
+  .hero-tags { justify-content: center; }
+  .hero-badge { margin-left: auto; margin-right: auto; }
+}
+@media (max-width: 480px) {
+  .hero-stats { border-radius: 12px; }
+  .hero-stat  { min-width: 50%; flex: 1 1 50%; }
+  .hero-actions { gap: 10px; }
+}
+@media (max-width: 360px) {
+  .hero-stat  { min-width: 100%; flex: 1 1 100%; border-right: none; border-bottom: 1px solid var(--border); }
+  .hero-stat:last-child { border-bottom: none; }
+}
+/* Three.js canvas must not interfere with layout */
+#three-canvas {
+  position: absolute;
+  inset: 0;
+  width: 100% !important;
+  height: 100% !important;
+  pointer-events: none;
+  z-index: 0;
+}
 </style>
 </head>
 <body>
@@ -2331,7 +2411,7 @@ html { scroll-behavior: smooth; -webkit-overflow-scrolling: touch; }
   <!-- HERO -->
   <section id="hero" style="position: relative; overflow: hidden;">
     <canvas id="three-canvas"></canvas>
-    <div style="max-width:min(900px,100%);margin:0 auto;position:relative;z-index:1">
+    <div style="max-width:min(900px,100%);margin:0 auto;position:relative;z-index:1;text-align:center;width:100%;display:flex;flex-direction:column;align-items:center">
       <div class="hero-badge">
         <span class="hero-badge-dot"></span>
         AI-Powered · Real-Time · Bengaluru Pilot Active
@@ -3216,14 +3296,14 @@ html { scroll-behavior: smooth; -webkit-overflow-scrolling: touch; }
       <!-- SMART CITY DASHBOARD -->
       <div class="section">
         <div class="sec-title">Command Center</div>
-        <a href="dashboard.html" style="display:flex;align-items:center;gap:10px;padding:12px 14px;background:linear-gradient(135deg,rgba(99,102,241,0.15),rgba(6,182,212,0.1));border:1px solid rgba(99,102,241,0.3);border-radius:10px;text-decoration:none;color:var(--text);font-size:12px;font-weight:600;transition:all 0.3s;cursor:pointer" onmouseover="this.style.borderColor='rgba(99,102,241,0.6)';this.style.boxShadow='0 4px 20px rgba(99,102,241,0.2)';this.style.transform='translateY(-1px)'" onmouseout="this.style.borderColor='rgba(99,102,241,0.3)';this.style.boxShadow='none';this.style.transform='none'">
+        <div onclick="openDashboard()" style="display:flex;align-items:center;gap:10px;padding:12px 14px;background:linear-gradient(135deg,rgba(99,102,241,0.15),rgba(6,182,212,0.1));border:1px solid rgba(99,102,241,0.3);border-radius:10px;text-decoration:none;color:var(--text);font-size:12px;font-weight:600;transition:all 0.3s;cursor:pointer" onmouseover="this.style.borderColor='rgba(99,102,241,0.6)';this.style.boxShadow='0 4px 20px rgba(99,102,241,0.2)';this.style.transform='translateY(-1px)'" onmouseout="this.style.borderColor='rgba(99,102,241,0.3)';this.style.boxShadow='none';this.style.transform='none'">
           <span style="font-size:20px">🏙️</span>
           <div style="flex:1">
             <div>Smart City Dashboard</div>
-            <div style="font-size:9px;color:var(--text3);font-weight:400;margin-top:2px">AI Digital Twin • Live Operations</div>
+            <div style="font-size:9px;color:var(--text3);font-weight:400;margin-top:2px">AI Digital Twin &bull; Live Operations</div>
           </div>
-          <span style="font-size:14px;color:var(--primary)">→</span>
-        </a>
+          <span style="font-size:14px;color:var(--primary)">&#8594;</span>
+        </div>
       </div>
 
       <!-- EMERGENCY -->
@@ -3423,6 +3503,37 @@ function scrollToSection(selector) {
     window.scrollTo({ top: targetPos, behavior: 'smooth' });
   }
 }
+
+// ── Smart City Dashboard navigation with auth guard ───────────────────────────
+function openDashboard() {
+  // If user is authenticated, open dashboard directly
+  if (typeof _currentUser !== 'undefined' && _currentUser) {
+    window.open('dashboard.html', '_blank');
+    return;
+  }
+  // Not authenticated — try opening anyway (dashboard has its own guest handling)
+  // but first prompt login for the best experience
+  if (typeof showAuthModal === 'function') {
+    notify('Sign in to access the full Smart City Dashboard', 'info');
+    showAuthModal();
+    // After sign-in, auto-open dashboard
+    var _dashListener = function() {
+      if (typeof _currentUser !== 'undefined' && _currentUser) {
+        window.open('dashboard.html', '_blank');
+      }
+    };
+    // One-time listener: check after auth state changes
+    var _origOnSignedIn = window._onSignedIn;
+    window._onSignedIn = function(user) {
+      if (_origOnSignedIn) _origOnSignedIn(user);
+      window._onSignedIn = _origOnSignedIn; // restore original
+      setTimeout(function() { window.open('dashboard.html', '_blank'); }, 500);
+    };
+  } else {
+    window.open('dashboard.html', '_blank');
+  }
+}
+window.openDashboard = openDashboard;
 
 /* ══════════════════════════════════════════════════
    ANIMATED BACKGROUND PARTICLES

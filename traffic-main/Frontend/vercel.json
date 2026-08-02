@@ -1,24 +1,35 @@
 {
   "version": 2,
   "builds": [
-    {
-      "src": "index.html",
-      "use": "@vercel/static"
-    }
+    { "src": "*.html", "use": "@vercel/static" },
+    { "src": "*.css",  "use": "@vercel/static" },
+    { "src": "*.js",   "use": "@vercel/static" },
+    { "src": "*.json", "use": "@vercel/static" },
+    { "src": "*.png",  "use": "@vercel/static" },
+    { "src": "*.svg",  "use": "@vercel/static" },
+    { "src": "*.ico",  "use": "@vercel/static" }
   ],
   "routes": [
-    {
-      "src": "/(.*)",
-      "dest": "/index.html"
-    }
+    { "src": "/dashboard.html",   "dest": "/dashboard.html" },
+    { "src": "/manifest.json",    "dest": "/manifest.json" },
+    { "src": "/offline_db.js",    "dest": "/offline_db.js" },
+    { "src": "/assistant.js",     "dest": "/assistant.js" },
+    { "src": "/assistant.css",    "dest": "/assistant.css" },
+    { "src": "/premium_ui.js",    "dest": "/premium_ui.js" },
+    { "src": "/premium_ui.css",   "dest": "/premium_ui.css" },
+    { "src": "/service-worker.js","dest": "/service-worker.js" },
+    { "src": "/(.*\\.png)",       "dest": "/$1" },
+    { "src": "/(.*\\.svg)",       "dest": "/$1" },
+    { "src": "/(.*\\.ico)",       "dest": "/$1" },
+    { "src": "/(.*)",             "dest": "/index.html" }
   ],
   "headers": [
     {
       "source": "/(.*)",
       "headers": [
-        { "key": "X-Content-Type-Options", "value": "nosniff" },
-        { "key": "X-Frame-Options", "value": "DENY" },
-        { "key": "Referrer-Policy", "value": "strict-origin-when-cross-origin" }
+        { "key": "X-Content-Type-Options",  "value": "nosniff" },
+        { "key": "Referrer-Policy",         "value": "strict-origin-when-cross-origin" },
+        { "key": "X-Frame-Options",         "value": "SAMEORIGIN" }
       ]
     }
   ]
