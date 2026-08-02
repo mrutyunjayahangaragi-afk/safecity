@@ -31,18 +31,23 @@ SafeRoute AI is a full-stack AI navigation platform that prioritizes **safety ov
 ```
 SafeRoute AI/
 ├── Frontend/
-│   └── index.html              ← Premium SPA (3400+ lines)
-│                                 Landing page · Auth modal · App view
-│                                 Leaflet map · AI route comparison
-│                                 Real-time layers (traffic/weather/crowd)
+│   ├── index.html              ← Premium SPA (6900+ lines)
+│   │                             Landing page · Auth modal · App view
+│   │                             Leaflet map · AI route comparison
+│   │                             Real-time layers (traffic/weather/crowd/hazards)
+│   └── dashboard.html          ← Smart City Digital Twin Dashboard (1500+ lines)
+│                                 Apache ECharts live trends · AI Safety Index KPI
+│                                 Live AI Insights feed · Predictive analytics (+15m/+30m/+60m)
+│                                 Emergency Command Center · Overlays
 │
 ├── Backend/
 │   ├── app.py                  ← FastAPI server (1100+ lines)
 │   │                             30+ endpoints · JWT middleware
-│   │                             /auth/me · /auth/profile · /compare-routes
+│   │                             Live URL: https://safecity-n5gl.onrender.com
+│   │                             /auth/me · /auth/profile · /compare-routes · /city/dashboard
 │   ├── data_processing.py      ← DBSCAN clustering, density grids
 │   ├── safety_score.py         ← Composite safety scoring engine
-│   ├── risk_model.py           ← CatBoost ML training + inference
+│   ├── risk_model.py           ← CatBoost / LogisticRegression ML inference
 │   ├── route_engine.py         ← A* / Dijkstra with safety cost
 │   ├── traffic_service.py      ← Traffic enrichment (50/30/20 formula)
 │   ├── traffic_repository.py   ← Supabase + local fallback (all persistence)
@@ -63,7 +68,7 @@ SafeRoute AI/
 │       └── ...5 more cities
 │
 ├── models/
-│   └── risk_model.pkl          ← Trained CatBoost model (auto-generated)
+│   └── risk_model.pkl          ← Trained risk model (auto-generated)
 │
 ├── AUTH_SETUP.md               ← Step-by-step auth provider configuration
 └── README.md                   ← This file
