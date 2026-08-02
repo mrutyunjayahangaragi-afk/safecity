@@ -15,9 +15,27 @@ from sklearn.model_selection import train_test_split, cross_val_score
 from sklearn.preprocessing   import MinMaxScaler, StandardScaler, LabelEncoder
 from sklearn.metrics         import classification_report
 from sklearn.pipeline        import Pipeline
-from xgboost                 import XGBClassifier
-from lightgbm                import LGBMClassifier
-from catboost                import CatBoostClassifier
+
+# Optional heavy ML libs — only needed when training from scratch.
+# At inference time (production) the pre-trained risk_model.pkl is loaded
+# directly, so these imports are skipped gracefully if not installed.
+try:
+    from xgboost  import XGBClassifier
+    _HAS_XGBOOST = True
+except ImportError:
+    _HAS_XGBOOST = False
+
+try:
+    from lightgbm import LGBMClassifier
+    _HAS_LIGHTGBM = True
+except ImportError:
+    _HAS_LIGHTGBM = False
+
+try:
+    from catboost import CatBoostClassifier
+    _HAS_CATBOOST = True
+except ImportError:
+    _HAS_CATBOOST = False
 
 BASE_DIR   = os.path.dirname(os.path.abspath(__file__))
 DATA_PATH  = os.path.join(BASE_DIR, "../data/bangalore_crime_dataset.csv")
@@ -99,29 +117,31 @@ def train(data_path: str = DATA_PATH, model_path: str = MODEL_PATH):
             ("scaler", StandardScaler()),
             ("clf",    ExtraTreesClassifier(n_estimators=200, random_state=42, n_jobs=-1)),
         ]),
-        "XGBoost": Pipeline([
+    }
+    if _HAS_XGBOOST:
+        candidates["XGBoost"] = Pipeline([
             ("scaler", StandardScaler()),
             ("clf",    XGBClassifier(
                             n_estimators=300, max_depth=6, learning_rate=0.1,
                             random_state=42, eval_metric="mlogloss", verbosity=0,
-                            # num_class handled automatically
                        )),
-        ]),
-        "LightGBM": Pipeline([
+        ])
+    if _HAS_LIGHTGBM:
+        candidates["LightGBM"] = Pipeline([
             ("scaler", StandardScaler()),
             ("clf",    LGBMClassifier(
                             n_estimators=500, learning_rate=0.05,
                             num_leaves=63, random_state=42, verbose=-1,
                        )),
-        ]),
-        "CatBoost": Pipeline([
+        ])
+    if _HAS_CATBOOST:
+        candidates["CatBoost"] = Pipeline([
             ("scaler", StandardScaler()),
             ("clf",    CatBoostClassifier(
                             iterations=500, learning_rate=0.05,
                             depth=6, random_seed=42, verbose=0,
                        )),
-        ]),
-    }
+        ])
 
     results = {}
     for name, pipe in candidates.items():
