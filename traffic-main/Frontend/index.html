@@ -5247,30 +5247,31 @@ async function doLogin() {
 }
 async function doRegister() {
   if (!_supabase) { notify('Supabase not available', 'danger'); return; }
-  var name = document.getElementById('reg-name').value.trim(), email = document.getElementById('reg-email').value.trim(), pass = document.getElementById('reg-pass').value;
+  var name = document.getElementById('reg-name').value.trim();
+  var email = document.getElementById('reg-email').value.trim();
+  var pass = document.getElementById('reg-pass').value;
   if (!name || !email || !pass) { _authErr('All fields are required.'); return; }
   if (pass.length < 6) { _authErr('Password must be at least 6 characters.'); return; }
   var res = await _supabase.auth.signUp({ email, password: pass, options: { data: { display_name: name } } });
-  if (res.error) _authErr(res.error.message);
-  else if (res.data && res.data.user && !res.data.session) _authOk('Check your email to confirm your account, then login.');
-  else _authOk('Account created! Welcome, ' + name + '.');
+  if (res.error) {
+    _authErr(res.error.message);
+  } else if (res.data && res.data.user && !res.data.session) {
+    // Email confirmation required — show message, don't close
+    _authOk('Check your email to confirm your account, then sign in.');
+  } else if (res.data && res.data.session) {
+    // Signed in immediately (email confirmation disabled) — onAuthStateChange fires
+    _authOk('Account created! Welcome, ' + name + '.');
+  }
 }
 
 function _saveProfile(user, name) {
-  if (!_supabase) return;
-  // Write to 'profiles' table (v2 schema) — includes both full_name and legacy display_name
-  _supabase.from('profiles').upsert({
-    user_id:    user.id,
-    full_name:  name,
-    email:      user.email || null,
-    phone_number: user.phone || null,
-    updated_at: new Date().toISOString(),
-    last_login: new Date().toISOString(),
-  }, { onConflict: 'user_id' }).then(function(res) {
-    if (res.error) console.warn('Profile upsert failed:', res.error.message);
-    else console.log('✅ Profile saved to Supabase (profiles)');
-  });
-  fetch(API + '/user/profile', { method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({ user_id: user.id, display_name: name, full_name: name, email: user.email }) }).catch(function(){});
+  // Only notify the backend (local fallback) — Supabase upsert handled by _saveExtendedProfile
+  // to avoid double-write on every sign-in.
+  fetch(API + '/user/profile', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ user_id: user.id, display_name: name, full_name: name, email: user.email })
+  }).catch(function() {}); // silent — local fallback doesn't need to succeed
 }
 
 function _loadRouteHistory() {
@@ -5582,15 +5583,30 @@ async function doVerifyOTP() {
       type: 'sms',
     });
     if (res.error) {
-      _authErr(res.error.message);
+      // Map common Supabase OTP errors to friendly messages
+      var msg = res.error.message || '';
+      if (msg.toLowerCase().includes('expired') || msg.toLowerCase().includes('invalid')) {
+        _authErr('OTP expired or invalid. Please request a new code.');
+      } else if (msg.toLowerCase().includes('rate')) {
+        _authErr('Too many attempts. Please wait before trying again.');
+      } else {
+        _authErr(msg);
+      }
       // Shake animation on OTP inputs
       digits.forEach(function(d) {
         d.style.borderColor = 'var(--danger)';
         d.style.animation = 'shake 0.3s ease';
         setTimeout(function() { d.style.animation = ''; d.style.borderColor = ''; }, 300);
       });
+    } else if (res.data && res.data.user) {
+      // Success — clear pending state before onAuthStateChange fires
+      _pendingPhone = '';
+      _otpRetryCount = 0;
+      resetPhoneForm();
+      // Ensure profile is saved with phone provider
+      _saveExtendedProfile(res.data.user, 'phone');
+      // onAuthStateChange fires _onSignedIn automatically
     }
-    // onAuthStateChange fires _onSignedIn on success
   } catch (e) {
     _authErr('Verification failed: ' + e.message);
   } finally {
@@ -5696,10 +5712,9 @@ _onSignedIn = function(user) {
   } else if (user.phone) {
     provider = 'phone';
   }
-  // Save extended profile to Supabase directly (handles table name correctly)
+  // Save extended profile to Supabase
   _saveExtendedProfile(user, provider);
-  // Update user badge to show provider icon — keep for backward compat but hide badge
-  var icons = { google: '🔵', apple: '⚫', phone: '📱', email: '✉️' };
+  // Update display name in legacy badge
   var badge = document.getElementById('user-name-display');
   if (badge) {
     var name = (user.user_metadata && user.user_metadata.display_name) ? user.user_metadata.display_name
@@ -5708,16 +5723,14 @@ _onSignedIn = function(user) {
              : (user.phone ? user.phone.slice(-4) : (user.email ? user.email.split('@')[0] : 'User'));
     badge.textContent = name;
   }
-  // Update premium navbar
-  if (typeof _updateNavbarProfile === 'function') _updateNavbarProfile(user);
   // Handle password reset redirect
   if (window.location.search.indexOf('reset=1') !== -1) {
     _promptPasswordReset();
   }
-  // Update nav login button
+  // Update nav login button visibility
   var loginBtn = document.getElementById('btn-login-nav');
   if (loginBtn) loginBtn.style.display = 'none';
-  // Update premium navbar
+  // Update premium navbar profile button (single call — NOT called again below)
   if (typeof _updateNavbarProfile === 'function') _updateNavbarProfile(user);
 };
 
@@ -5787,8 +5800,12 @@ function _handleOAuthRedirect() {
     history.replaceState(null, '', window.location.pathname);
   }
 }
-// Run on load
-_handleOAuthRedirect();
+// Run after DOM is ready to avoid timing issues on slow connections
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', _handleOAuthRedirect);
+} else {
+  _handleOAuthRedirect();
+}
 
 // ─── PROFILE MODAL ─────────────────────────────────────────────────────────────
 function showProfileModal() {
@@ -6385,18 +6402,13 @@ function toggleDarkMode(itemEl) {
   notify(pill.classList.contains('on') ? 'Dark mode enabled' : 'Light mode enabled', 'info');
 }
 
-// ── Hook into existing _onSignedIn / _onSignedOut / _onGuest ──────────────────
-// Wrap the originals — preserves every existing behavior, just adds navbar update.
+// ── Hook into _onSignedOut / _onGuest for navbar update ──────────────────────
+// _onSignedIn already calls _updateNavbarProfile directly — no wrapper needed.
+// Only wrap signOut and guest for navbar cleanup.
 
 (function() {
-  var _orig_onSignedIn  = window._onSignedIn;
   var _orig_onSignedOut = window._onSignedOut;
   var _orig_onGuest     = window._onGuest;
-
-  window._onSignedIn = function(user) {
-    if (_orig_onSignedIn) _orig_onSignedIn(user);
-    _updateNavbarProfile(user);
-  };
 
   window._onSignedOut = function() {
     if (_orig_onSignedOut) _orig_onSignedOut();
@@ -6410,11 +6422,8 @@ function toggleDarkMode(itemEl) {
   };
 })();
 
-// ── Also hook the extended _onSignedIn that was set earlier ───────────────────
-// The extended version overrides _onSignedIn via var assignment; wrap it too
-// by patching after DOMContentLoaded so it runs after all scripts have loaded.
+// ── On DOMContentLoaded: sync navbar with current session ────────────────────
 document.addEventListener('DOMContentLoaded', function() {
-  // Re-check current session and update navbar immediately
   if (typeof _supabase !== 'undefined' && _supabase) {
     _supabase.auth.getSession().then(function(res) {
       if (res.data && res.data.session && res.data.session.user) {
