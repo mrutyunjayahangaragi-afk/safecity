@@ -207,7 +207,7 @@ def load_city(state_key: str, city_key: str) -> CityState:
 
     # 3. Load crime data with city-specific bounding box
     crime_df = dp.load_and_clean(data_path, bbox=config.bbox)
-    _, _     = dp.cluster_hotspots(crime_df)
+    crime_df, _ = dp.cluster_hotspots(crime_df)
 
     # 4. Compute density grid + update safety engine
     # Fix: reset index to avoid duplicate-label reindex error from cluster_hotspots
